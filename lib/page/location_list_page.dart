@@ -21,7 +21,7 @@ class _LocationListPage extends State<LocationListPage> {
       body: Column(
           children: <Widget> [
             Container(
-              margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+              margin: const EdgeInsets.fromLTRB(8, 8, 8, 4),
               child: TextField(
                 controller: controller,
                 decoration: InputDecoration(
@@ -42,6 +42,25 @@ class _LocationListPage extends State<LocationListPage> {
               ),
 
             ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text('Distance', style: TextStyle(color: DARK_PRIMARY_TEXT),),
+                  ),
+                  Expanded(
+                    child: Text('Location', style: TextStyle(color: DARK_PRIMARY_TEXT),),
+                  ),
+                  Expanded(
+                    child: Text('Wind',  style: TextStyle(color: DARK_PRIMARY_TEXT),),
+                  ),
+                  Expanded(
+                    child: Text('Weather',  style: TextStyle(color: DARK_PRIMARY_TEXT),),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: ListView.builder(
                   itemCount: sessions.length,
@@ -49,9 +68,8 @@ class _LocationListPage extends State<LocationListPage> {
                     final location = sessions[index];
 
                     return Container(
-                      margin: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                      margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                       child: ListTile(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                         title: Text(location.locationName),
                         subtitle: Text(location.adres),
                         isThreeLine: true,
