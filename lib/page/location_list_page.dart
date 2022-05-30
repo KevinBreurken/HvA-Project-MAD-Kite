@@ -54,7 +54,9 @@ class _LocationListPage extends State<LocationListPage> {
                   ),
                   Expanded(
                     flex: 4,
-                    child: Text('Location', style: TextStyle(color: DARK_SECONDARY_TEXT,fontSize: 11),),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                      child:Text('Location', style: TextStyle(color: DARK_SECONDARY_TEXT,fontSize: 11),),)
                   ),
                   Expanded(
                     flex: 1,
@@ -91,8 +93,8 @@ class _LocationListPage extends State<LocationListPage> {
                             )
                           ],
                           gradient: LinearGradient(
-                            colors: [Color(0xFF224324), Color(0xFF2F2F2F), Color(0xFF2F2F2F)],
-                            stops: [0, 0.5, 1],
+                            colors: [HexColor(location.windIconColor).withAlpha(100), Color(0xFF2F2F2F).withAlpha(10), Color(0xFF2F2F2F)],
+                            stops: [0, 0.6, 1],
                             begin: AlignmentDirectional(0, -1),
                             end: AlignmentDirectional(0, 1),
                           ),
@@ -111,10 +113,9 @@ class _LocationListPage extends State<LocationListPage> {
                                 child: Align(
                                   alignment: AlignmentDirectional(0, 0),
                                   child: Text(
-                                    '14 KM',
+                                    '${location.distance} KM',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontFamily: 'Poppins',
                                         color: DARK_PRIMARY_TEXT,
                                         fontSize: 20,
                                         fontWeight: FontWeight.normal,
@@ -138,20 +139,18 @@ class _LocationListPage extends State<LocationListPage> {
                                       Align(
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: Text(
-                                          'Castricum aan zee',
+                                          location.locationName,
                                           textAlign: TextAlign.start,
                                           style: TextStyle(
-                                            fontFamily: 'Poppins',
                                             color: DARK_PRIMARY_TEXT,
                                             fontSize: 20,
-                                            fontWeight: FontWeight.normal,
                                           ),
                                         ),
                                       ),
                                       Align(
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: Text(
-                                          'Stand, 19011 NZ Castricum',
+                                          location.adres,
                                           style: TextStyle(
                                             color: Color(0xFF848484),
                                             fontSize: 14,
@@ -176,10 +175,10 @@ class _LocationListPage extends State<LocationListPage> {
                                       flex: 3,
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
-                                        child: Transform.rotate(angle: -90 * (-math.pi / 180.0),child: SvgPicture.asset(
+                                        child: Transform.rotate(angle: -location.windDirection * (-math.pi / 180.0),child: SvgPicture.asset(
                                           'assets/location_item/wind_direction.svg',
                                           height: 95,
-                                          color: DARK_PRIMARY_TEXT,
+                                          color: HexColor(location.windIconColor),
                                         ),
                                         ),
                                       ),
@@ -187,13 +186,11 @@ class _LocationListPage extends State<LocationListPage> {
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
-                                        '12km',
+                                        '${location.windSpeed}km',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontFamily: 'Poppins',
                                           color: DARK_PRIMARY_TEXT,
                                           fontSize: 16,
-                                          fontWeight: FontWeight.normal,
                                         ),
                                       ),
                                     ),
