@@ -67,6 +67,8 @@ flutter:
     - assets/status_car.svg
     - assets/status_gear.svg
     - assets/status_kitesurfing.svg
+    - assets/location_item/weather_cloudy.svg
+    - assets/location_item/wind_direction.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

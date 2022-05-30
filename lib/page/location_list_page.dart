@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kiteup/dummy%20data/locations.dart';
+import 'dart:math' as math;
 
 import '../constants.dart';
 import '../helpers/hexcolor.dart';
@@ -48,19 +50,19 @@ class _LocationListPage extends State<LocationListPage> {
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Text('Distance', style: TextStyle(color: DARK_PRIMARY_TEXT,fontSize: 11),),
+                    child: Text('Distance',textAlign: TextAlign.center, style: TextStyle(color: DARK_SECONDARY_TEXT,fontSize: 11),),
                   ),
                   Expanded(
                     flex: 4,
-                    child: Text('Location', style: TextStyle(color: DARK_PRIMARY_TEXT,fontSize: 11),),
+                    child: Text('Location', style: TextStyle(color: DARK_SECONDARY_TEXT,fontSize: 11),),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Text('Wind',  style: TextStyle(color: DARK_PRIMARY_TEXT,fontSize: 11),),
+                    child: Text('Wind',textAlign: TextAlign.center,  style: TextStyle(color: DARK_SECONDARY_TEXT,fontSize: 11),),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Text('Weather',  style: TextStyle(color: DARK_PRIMARY_TEXT,fontSize: 11),),
+                    child: Text('Weather',textAlign: TextAlign.center,  style: TextStyle(color: DARK_SECONDARY_TEXT,fontSize: 11),),
                   ),
                 ],
               ),
@@ -77,7 +79,25 @@ class _LocationListPage extends State<LocationListPage> {
                         // this.widget.callBackSetState(1);
                       },
                       child: Container(
-                        margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                        width: MediaQuery.of(context).size.width,
+                        height: 70,
+                        margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 4,
+                              color: Color(0x40000000),
+                              offset: Offset(0, 4),
+                            )
+                          ],
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF224324), Color(0xFF2F2F2F), Color(0xFF2F2F2F)],
+                            stops: [0, 0.5, 1],
+                            begin: AlignmentDirectional(0, -1),
+                            end: AlignmentDirectional(0, 1),
+                          ),
+                          shape: BoxShape.rectangle,
+                        ),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -86,15 +106,19 @@ class _LocationListPage extends State<LocationListPage> {
                               flex: 1,
                               child: Container(
                                 width: 100,
-                                height: 64,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
-                                ),
+                                height: 100,
+                                decoration: BoxDecoration(),
                                 child: Align(
                                   alignment: AlignmentDirectional(0, 0),
                                   child: Text(
-                                    '14KM',
+                                    '14 KM',
                                     textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                        color: DARK_PRIMARY_TEXT,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -102,20 +126,76 @@ class _LocationListPage extends State<LocationListPage> {
                             Expanded(
                               flex: 4,
                               child: Container(
-                                width: 100,
-                                height: 64,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
+                                width: MediaQuery.of(context).size.width,
+                                height: 100,
+                                decoration: BoxDecoration(),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        child: Text(
+                                          'Castricum aan zee',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            color: DARK_PRIMARY_TEXT,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        child: Text(
+                                          'Stand, 19011 NZ Castricum',
+                                          style: TextStyle(
+                                            color: Color(0xFF848484),
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      'Castricum aan zee',
+                                    Expanded(
+                                      flex: 3,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                                        child: Transform.rotate(angle: -90 * (-math.pi / 180.0),child: SvgPicture.asset(
+                                          'assets/location_item/wind_direction.svg',
+                                          height: 95,
+                                          color: DARK_PRIMARY_TEXT,
+                                        ),
+                                        ),
+                                      ),
                                     ),
-                                    Text(
-                                      'Stand, 19011 NZ Castricum',
+                                    Align(
+                                      alignment: AlignmentDirectional(0, 0),
+                                      child: Text(
+                                        '12km',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          color: DARK_PRIMARY_TEXT,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -125,68 +205,31 @@ class _LocationListPage extends State<LocationListPage> {
                               flex: 1,
                               child: Container(
                                 width: 100,
-                                height: 64,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
-                                ),
+                                height: 100,
+                                decoration: BoxDecoration(),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Expanded(
-                                      flex: 1,
+                                      flex: 3,
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                                        child: Image.network(
-                                          'https://picsum.photos/seed/27/600',
-                                          width: 100,
-                                          height: 100,
-                                          fit: BoxFit.cover,
+                                        padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                                        child: SvgPicture.asset(
+                                          'assets/location_item/weather_cloudy.svg',
+                                          height: 95,
+                                          color: DARK_PRIMARY_TEXT,
                                         ),
                                       ),
                                     ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Align(
-                                        alignment: AlignmentDirectional(0, -0.05),
-                                        child: Text(
-                                          '12km',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                width: 100,
-                                height: 64,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                                        child: Image.network(
-                                          'https://picsum.photos/seed/221/600',
-                                          width: 100,
-                                          height: 100,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Text(
-                                          '5°C',
-                                          textAlign: TextAlign.center,
+                                    Align(
+                                      alignment: AlignmentDirectional(0, 0),
+                                      child: Text(
+                                        '5°C',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: DARK_PRIMARY_TEXT,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
                                         ),
                                       ),
                                     ),
