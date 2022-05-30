@@ -43,20 +43,24 @@ class _LocationListPage extends State<LocationListPage> {
 
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+              margin: const EdgeInsets.fromLTRB(4, 8, 0, 0),
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: Text('Distance', style: TextStyle(color: DARK_PRIMARY_TEXT),),
+                    flex: 1,
+                    child: Text('Distance', style: TextStyle(color: DARK_PRIMARY_TEXT,fontSize: 11),),
                   ),
                   Expanded(
-                    child: Text('Location', style: TextStyle(color: DARK_PRIMARY_TEXT),),
+                    flex: 4,
+                    child: Text('Location', style: TextStyle(color: DARK_PRIMARY_TEXT,fontSize: 11),),
                   ),
                   Expanded(
-                    child: Text('Wind',  style: TextStyle(color: DARK_PRIMARY_TEXT),),
+                    flex: 1,
+                    child: Text('Wind',  style: TextStyle(color: DARK_PRIMARY_TEXT,fontSize: 11),),
                   ),
                   Expanded(
-                    child: Text('Weather',  style: TextStyle(color: DARK_PRIMARY_TEXT),),
+                    flex: 1,
+                    child: Text('Weather',  style: TextStyle(color: DARK_PRIMARY_TEXT,fontSize: 11),),
                   ),
                 ],
               ),
@@ -67,13 +71,131 @@ class _LocationListPage extends State<LocationListPage> {
                   itemBuilder: (context, index) {
                     final location = sessions[index];
 
-                    return Container(
-                      margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                      child: ListTile(
-                        title: Text(location.locationName),
-                        subtitle: Text(location.adres),
-                        isThreeLine: true,
-                        tileColor: HexColor('848484'),
+                    return GestureDetector(
+                      onTap: () {
+                        // LocationListPage.setLocationIndex(index);
+                        // this.widget.callBackSetState(1);
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                width: 100,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFEEEEEE),
+                                ),
+                                child: Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: Text(
+                                    '14KM',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                width: 100,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFEEEEEE),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Castricum aan zee',
+                                    ),
+                                    Text(
+                                      'Stand, 19011 NZ Castricum',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                width: 100,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFEEEEEE),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                                        child: Image.network(
+                                          'https://picsum.photos/seed/27/600',
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Align(
+                                        alignment: AlignmentDirectional(0, -0.05),
+                                        child: Text(
+                                          '12km',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                width: 100,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFEEEEEE),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                                        child: Image.network(
+                                          'https://picsum.photos/seed/221/600',
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Align(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        child: Text(
+                                          '5°C',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   }
