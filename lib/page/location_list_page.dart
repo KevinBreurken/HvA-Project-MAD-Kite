@@ -177,7 +177,9 @@ class _LocationListPage extends State<LocationListPage> {
                                         padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                                         child: Transform.rotate(angle: -location.windDirection * (-math.pi / 180.0),child: SvgPicture.asset(
                                           'assets/location_item/wind_direction.svg',
-                                          height: 95,
+                                          height: 42,
+                                          width: 42,
+                                          fit: BoxFit.scaleDown,
                                           color: HexColor(location.windIconColor),
                                         ),
                                         ),
@@ -213,8 +215,10 @@ class _LocationListPage extends State<LocationListPage> {
                                         padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                                         child: SvgPicture.asset(
                                           'assets/location_item/weather_cloudy.svg',
-                                          height: 95,
+                                          height: 64,
+                                          width: 64,
                                           color: DARK_PRIMARY_TEXT,
+                                          fit: BoxFit.scaleDown,
                                         ),
                                       ),
                                     ),
