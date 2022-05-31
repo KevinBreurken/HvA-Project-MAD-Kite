@@ -188,7 +188,7 @@ class _LocationListPage extends State<LocationListPage> {
                                     Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
-                                        '${location.windSpeed}km',
+                                        '${location.windSpeed}kn',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: DARK_PRIMARY_TEXT,
