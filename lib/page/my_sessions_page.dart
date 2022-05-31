@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kiteup/dummy%20data/sessions.dart';
 import 'package:kiteup/helpers/hexcolor.dart';
 import 'package:kiteup/constants.dart';
@@ -48,15 +49,58 @@ class _MySessionsPageState extends State<MySessionsPage>
                 final session = sessions[index];
 
                 return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   margin: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                  child: ListTile(
+                  decoration: BoxDecoration(
+                    color: HexColor('484848'),
+                    borderRadius: BorderRadius.circular(15)
+                    ),
+                  
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(children: [
+                        Text(session.locationName, style: TextStyle(color: HexColor("FFFFFF"))),
+                        const Spacer(),
+                        Text(session.date, style: TextStyle(color: HexColor("FFFFFF")))
+                      ],
+                      ),
+                      Row(children: [
+                        Text(session.gear, style: TextStyle(color: HexColor("848484")),),
+                        const Spacer(),
+                        Text(session.start + " - " + session.end, style: TextStyle(color: HexColor("848484")),)
+                      ],
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          children: [
+                              RatingBarIndicator(
+                                itemSize: 25,
+                                direction: Axis.horizontal,
+                                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                itemCount: 5,
+                                rating: session.rating,
+                                itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Colors.yellow,
+
+                              ), )
+                          ],
+                        ),
+                      )
+                    ]
+                    ),
+
+                  /*child: ListTile(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     title: Text(session.locationName),
                     subtitle: Text(session.gear),
                     isThreeLine: true,
                     trailing: Text(session.date + "\n" + session.start + " - " + session.end, textAlign: TextAlign.right,),
                     tileColor: HexColor('848484'),
-                  ),
+                  ),*/
                 );
             }
           ),

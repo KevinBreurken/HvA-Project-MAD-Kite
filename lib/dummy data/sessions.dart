@@ -1,7 +1,7 @@
 class Session{
   final String locationName;
   final String gear;
-  final num rating;
+  final double rating;
   final String date;
   final String start;
   final String end;
