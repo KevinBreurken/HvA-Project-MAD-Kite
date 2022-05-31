@@ -25,9 +25,10 @@ class _MySessionsPageState extends State<MySessionsPage>
             child: TextField(
               controller: controller,
               decoration: InputDecoration(
+                
                 filled: true,
                 fillColor: HexColor('848484'),
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search,),
                 hintText: 'Search...',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -39,8 +40,7 @@ class _MySessionsPageState extends State<MySessionsPage>
                 )
               ),
               onChanged: searchSession,
-            ),
-
+            )
           ),
           Expanded(
             child: ListView.builder(
@@ -73,42 +73,30 @@ class _MySessionsPageState extends State<MySessionsPage>
                       ),
 
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         child: Row(
                           children: [
                               RatingBarIndicator(
-                                itemSize: 25,
+                                itemSize: 15,
                                 direction: Axis.horizontal,
-                                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                itemPadding: const EdgeInsets.symmetric(horizontal: 1),
                                 itemCount: 5,
                                 rating: session.rating,
-                                itemBuilder: (context, _) => const Icon(
+                                itemBuilder: (context, _) =>  Icon(
                                 Icons.star,
-                                color: Colors.yellow,
-
+                                color: HexColor("FAD309"),
                               ), )
                           ],
                         ),
                       )
                     ]
                     ),
-
-                  /*child: ListTile(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                    title: Text(session.locationName),
-                    subtitle: Text(session.gear),
-                    isThreeLine: true,
-                    trailing: Text(session.date + "\n" + session.start + " - " + session.end, textAlign: TextAlign.right,),
-                    tileColor: HexColor('848484'),
-                  ),*/
                 );
             }
           ),
           )
         ]
-
       )
-
       );
       
 
