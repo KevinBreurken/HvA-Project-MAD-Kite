@@ -11,10 +11,10 @@ class ModalCancel extends StatefulWidget {
 }
 
 class _ModalCancelState extends State<ModalCancel> {
+  String reason = reasons[0];
+
   @override
   Widget build(BuildContext context) {
-    String? reason;
-
     ModalTemplate dialog = ModalTemplate(
       title: 'Why did you cancel?',
       function: () => Navigator.pop(context, [reason]),
@@ -44,6 +44,7 @@ class _ModalCancelState extends State<ModalCancel> {
                         selected: reason == e,
                         onChanged: (value) {
                           reason = value.toString();
+                          setState(() {});
                         },
                       ))
                   .toList(),
