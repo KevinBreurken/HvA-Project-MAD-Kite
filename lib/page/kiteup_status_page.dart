@@ -279,6 +279,7 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
           buttonContinueText = '';
           buttonContinueFunction = () => {};
           buttonStopFunction = () async => {
+                stopWatchTimer.onExecute.add(StopWatchExecute.stop),
                 ratingData = await showDialog(
                     context: context,
                     builder: (context) {
