@@ -32,7 +32,7 @@ class _ModalTemplateState extends State<ModalTemplate> {
         Container(
           height: 32,
           width: double.infinity,
-          child: Text(_selectedLocationNotifier.currentLocation,
+          child: Text(_selectedLocationNotifier.selectedLocation.locationName,
               style: TextStyle(color: PRIMARY, fontSize: 12)),
         ),
         if (widget.child != null) widget.child!,
