@@ -115,11 +115,7 @@ class _LocationListPage extends State<LocationListPage> {
                                   child: Text(
                                     '${location.distance} KM',
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: DARK_PRIMARY_TEXT,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                    ),
+                                    style: Theme.of(context).textTheme.displayMedium,
                                   ),
                                 ),
                               ),
@@ -184,10 +180,7 @@ class _LocationListPage extends State<LocationListPage> {
                                       child: Text(
                                         '${location.windSpeed}kn',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: DARK_PRIMARY_TEXT,
-                                          fontSize: 16,
-                                        ),
+                                        style: Theme.of(context).textTheme.displaySmall
                                       ),
                                     ),
                                   ],
@@ -221,11 +214,7 @@ class _LocationListPage extends State<LocationListPage> {
                                       child: Text(
                                         '5°C',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: DARK_PRIMARY_TEXT,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                        style: Theme.of(context).textTheme.displaySmall,
                                       ),
                                     ),
                                   ],

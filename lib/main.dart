@@ -14,6 +14,8 @@ import 'package:kiteup/page/settings_page.dart';
 import 'package:kiteup/theme/custom_theme.dart';
 import 'package:provider/provider.dart';
 
+import 'notifiers/notifier_theme.dart';
+
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<CancelReasonNotifier>(
@@ -28,6 +30,9 @@ void main() {
     ChangeNotifierProvider<KiteupStatusNotifier>(
       create: (_) => KiteupStatusNotifier(),
     ),
+    ChangeNotifierProvider<ThemeNotifier>(
+        create: (_) => ThemeNotifier(customDarkTheme()),
+    ),
   ], child: MyApp()));
 }
 
@@ -36,12 +41,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       title: 'Kite-Up',
       debugShowCheckedModeBanner: false,
-      darkTheme: customDarkTheme(),
-      theme: customLightTheme(),
-      themeMode: ThemeMode.dark,
+      theme: themeNotifier.getTheme(),
       home: const MyHomePage(title: 'Kite-Up'),
     );
   }
