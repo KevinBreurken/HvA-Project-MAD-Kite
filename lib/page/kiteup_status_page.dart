@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:kiteup/constants.dart';
 import 'package:kiteup/notifiers/notifier_kiteup_status.dart';
 import 'package:kiteup/notifiers/notifier_selected_location.dart';
+import 'package:kiteup/page/my_sessions_page.dart';
 import 'package:kiteup/widgets/modals/modal_cancel.dart';
 import 'package:kiteup/widgets/modals/modal_rating.dart';
 import 'package:kiteup/widgets/modals/modal_session.dart';
@@ -13,14 +14,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class KiteupStatusPage extends StatefulWidget {
+  Function callbackSetState;
+
+  KiteupStatusPage(this.callbackSetState);
+
   @override
-  _KiteupStatusPageState createState() => _KiteupStatusPageState();
+  _KiteupStatusPageState createState() => _KiteupStatusPageState(callbackSetState);
 }
 
 class _KiteupStatusPageState extends State<KiteupStatusPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation _animation;
+  Function callbackSetState;
+
+  _KiteupStatusPageState(this.callbackSetState);
 
   late final SharedPreferences storage;
 
@@ -60,8 +68,9 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
 
   loadStorage() async {
     storage = await SharedPreferences.getInstance();
-    storage.setString('kiteup-status', 'Traveling');
+    // storage.setString('kiteup-status', 'Traveling');
     status = storage.getString('kiteup-status');
+    info = storage.getString('kiteup-board-data')!;
 
     if (status != null) {
       if (status == 'Gear-Up') {
@@ -122,7 +131,7 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                         flex: 1,
                       ),
                       Text(
-                        _selectedLocationNotifier.currentLocation,
+                        _selectedLocationNotifier.selectedLocation.locationName,
                         style: TextStyle(
                             color: DARK_PRIMARY_TEXT,
                             fontSize: 40,
@@ -186,68 +195,10 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
 
   void loadPageStatusData() {
     switch (status) {
-      case 'Traveling':
-        setState(() {
-          svgFile = 'assets/status_car.svg';
-          info = '';
-          timer = '';
-          buttonContinueText = 'Arrived';
-          buttonContinueFunction = () async => {
-                sessionData = await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ModalSession();
-                    }),
-                if (sessionData[0] != null &&
-                    sessionData[1] != null &&
-                    sessionData[2] != null)
-                  {
-                    status = 'Gear-Up',
-                    storage.setString('kiteup-status', status!),
-                    endDateTime =
-                        DateTime.now().add(Duration(seconds: sessionData[2])),
-                    storage.setString(
-                        'kiteup-preparation-time', endDateTime.toString()),
-                    stopWatchTimer = StopWatchTimer(
-                      presetMillisecond:
-                          endDateTime.difference(DateTime.now()).inMilliseconds,
-                      mode: StopWatchMode.countDown,
-                      onChangeRawSecond: (value) => setState(() {
-                        timer = formatHHMMSS(value);
-                      }),
-                      onEnded: () => {
-                        setState(() {
-                          status = 'Kitesurfing';
-                          storage.setString('kiteup-status', status!);
-                          storage.remove('kiteup-preparation-time');
-                          stopWatchTimer.onExecute.add(StopWatchExecute.stop);
-                          stopWatchTimer = StopWatchTimer(
-                            mode: StopWatchMode.countUp,
-                            onChangeRawSecond: (value) => setState(() {
-                              timer = formatHHMMSS(value);
-                              storage.setInt('kiteup-timer', value);
-                            }),
-                          );
-                          stopWatchTimer.onExecute.add(StopWatchExecute.start);
-                        })
-                      },
-                    ),
-                    stopWatchTimer.onExecute.add(StopWatchExecute.start)
-                  }
-              };
-          buttonStopFunction = () => {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ModalCancel();
-                    })
-              };
-        });
-        break;
       case 'Gear-Up':
         setState(() {
           svgFile = 'assets/status_gear.svg';
-          info = boardSizes[sessionData[0]] + ', ' + boardTypes[sessionData[1]];
+          info = info;
           buttonContinueText = 'Ready';
           buttonContinueFunction = () => {
                 status = 'Kitesurfing',
@@ -286,7 +237,9 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                       return ModalRating();
                     }),
                 status = 'Traveling',
-                storage.setString('kiteup-status', status!)
+                storage.setString('kiteup-status', status!),
+                callbackSetState(1),
+                Navigator.pushNamed(context, '')
               };
         });
         break;

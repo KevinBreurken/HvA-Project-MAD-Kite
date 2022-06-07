@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kiteup/dummy%20data/locations.dart';
+import 'package:kiteup/page/location_info_place.dart';
+import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
 import '../constants.dart';
 import '../helpers/hexcolor.dart';
+import '../notifiers/notifier_selected_location.dart';
 
 class LocationListPage extends StatefulWidget {
+
+  LocationListPage();
+
   @override
   _LocationListPage createState() => _LocationListPage();
 }
@@ -17,7 +23,12 @@ class _LocationListPage extends State<LocationListPage> {
   final controller = TextEditingController();
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    
+    final _selectedLocationNotifier =
+        Provider.of<SelectedLocationNotifier>(context);
+        
+    return Scaffold(
       appBar: null,
       backgroundColor: DARK_BACKGROUND_PRIMARY,
       body: Column(
@@ -77,8 +88,8 @@ class _LocationListPage extends State<LocationListPage> {
 
                     return GestureDetector(
                       onTap: () {
-                        // LocationListPage.setLocationIndex(index);
-                        // this.widget.callBackSetState(1);
+                        _selectedLocationNotifier.updateSelectedLocation(location);
+                        Navigator.pushNamed(context, 'location_details');
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -249,8 +260,8 @@ class _LocationListPage extends State<LocationListPage> {
 
       )
 
-  );
-
+    );
+  }
 
   void searchSession(String query) {
     final suggestions = allLocations.where((session){
