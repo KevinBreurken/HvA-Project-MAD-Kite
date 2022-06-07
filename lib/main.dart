@@ -11,6 +11,7 @@ import 'package:kiteup/page/kiteup_status_page.dart';
 import 'package:kiteup/page/map_page.dart';
 import 'package:kiteup/page/my_sessions_page.dart';
 import 'package:kiteup/page/settings_page.dart';
+import 'package:kiteup/theme/custom_theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -38,9 +39,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Kite-Up',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      darkTheme: customDarkTheme(),
+      theme: customLightTheme(),
+      themeMode: ThemeMode.dark,
       home: const MyHomePage(title: 'Kite-Up'),
     );
   }

@@ -50,21 +50,21 @@ class _LocationListPage extends State<LocationListPage> {
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Text('Distance',textAlign: TextAlign.center, style: TextStyle(color: DARK_SECONDARY_TEXT,fontSize: 11),),
+                    child: Text('Distance',textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelSmall,),
                   ),
                   Expanded(
                     flex: 4,
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                      child:Text('Location', style: TextStyle(color: DARK_SECONDARY_TEXT,fontSize: 11),),)
+                      child:Text('Location', style: Theme.of(context).textTheme.labelSmall,),)
                   ),
                   Expanded(
                     flex: 1,
-                    child: Text('Wind',textAlign: TextAlign.center,  style: TextStyle(color: DARK_SECONDARY_TEXT,fontSize: 11),),
+                    child: Text('Wind',textAlign: TextAlign.center,  style: Theme.of(context).textTheme.labelSmall,),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Text('Weather',textAlign: TextAlign.center,  style: TextStyle(color: DARK_SECONDARY_TEXT,fontSize: 11),),
+                    child: Text('Weather',textAlign: TextAlign.center,  style: Theme.of(context).textTheme.labelSmall,),
                   ),
                 ],
               ),
@@ -141,20 +141,14 @@ class _LocationListPage extends State<LocationListPage> {
                                         child: Text(
                                           location.locationName,
                                           textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            color: DARK_PRIMARY_TEXT,
-                                            fontSize: 20,
-                                          ),
+                                          style: Theme.of(context).textTheme.headlineSmall
                                         ),
                                       ),
                                       Align(
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: Text(
                                           location.adres,
-                                          style: TextStyle(
-                                            color: Color(0xFF848484),
-                                            fontSize: 14,
-                                          ),
+                                          style: Theme.of(context).textTheme.bodySmall
                                         ),
                                       ),
                                     ],
