@@ -12,231 +12,278 @@ class LocationListPage extends StatefulWidget {
 }
 
 class _LocationListPage extends State<LocationListPage> {
-
   List<Location> sessions = allLocations;
   final controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    //Start empty
+    searchSession("");
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: null,
       backgroundColor: DARK_BACKGROUND_PRIMARY,
-      body: Column(
-          children: <Widget> [
-            Container(
-              margin: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-              child: TextField(
-                controller: controller,
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: HexColor('848484'),
-                    prefixIcon: const Icon(Icons.search),
-                    hintText: 'Search...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
+      body: Column(children: <Widget>[
+        Container(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+          decoration: BoxDecoration(
+            color: HexColor('484848'),
+          ),
+          child: Row(
 
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: PRIMARY),
-                        borderRadius: BorderRadius.circular(30)
-                    )
+            children: [
+              Text(
+                'Search spots',
+                textAlign: TextAlign.left,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ],
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: HexColor('484848'),
+          ),
+          padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
+          child: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+                filled: true,
+                fillColor: HexColor('848484'),
+                prefixIcon: const Icon(Icons.search),
+                hintText: 'Search...',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                onChanged: searchSession,
-              ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: PRIMARY),
+                    borderRadius: BorderRadius.circular(30))),
+            onChanged: searchSession,
+          ),
+        ),
+        ///Item labels
+        // Container(
+        //   margin: const EdgeInsets.fromLTRB(4, 8, 0, 0),
+        //   child: Row(
+        //     children: <Widget>[
+        //       Expanded(
+        //         flex: 1,
+        //         child: Text(
+        //           'Distance',
+        //           textAlign: TextAlign.center,
+        //           style: Theme.of(context).textTheme.labelSmall,
+        //         ),
+        //       ),
+        //       Expanded(
+        //           flex: 4,
+        //           child: Padding(
+        //             padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+        //             child: Text(
+        //               'Location',
+        //               style: Theme.of(context).textTheme.labelSmall,
+        //             ),
+        //           )),
+        //       Expanded(
+        //         flex: 1,
+        //         child: Text(
+        //           'Wind',
+        //           textAlign: TextAlign.center,
+        //           style: Theme.of(context).textTheme.labelSmall,
+        //         ),
+        //       ),
+        //       Expanded(
+        //         flex: 1,
+        //         child: Text(
+        //           'Weather',
+        //           textAlign: TextAlign.center,
+        //           style: Theme.of(context).textTheme.labelSmall,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        Expanded(
+          child: ListView.builder(
+              itemCount: sessions.length,
+              itemBuilder: (context, index) {
+                final location = sessions[index];
 
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(4, 8, 0, 0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Text('Distance',textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelSmall,),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                      child:Text('Location', style: Theme.of(context).textTheme.labelSmall,),)
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text('Wind',textAlign: TextAlign.center,  style: Theme.of(context).textTheme.labelSmall,),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text('Weather',textAlign: TextAlign.center,  style: Theme.of(context).textTheme.labelSmall,),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: sessions.length,
-                  itemBuilder: (context, index) {
-                    final location = sessions[index];
-
-                    return GestureDetector(
-                      onTap: () {
-                        // LocationListPage.setLocationIndex(index);
-                        // this.widget.callBackSetState(1);
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 70,
-                        margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: Color(0x40000000),
-                              offset: Offset(0, 4),
-                            )
-                          ],
-                          gradient: LinearGradient(
-                            colors: [HexColor(location.windIconColor).withAlpha(100), Color(0xFF2F2F2F).withAlpha(10), Color(0xFF2F2F2F)],
-                            stops: [0, 0.6, 1],
-                            begin: AlignmentDirectional(0, -1),
-                            end: AlignmentDirectional(0, 1),
+                return GestureDetector(
+                  onTap: () {
+                    // LocationListPage.setLocationIndex(index);
+                    // this.widget.callBackSetState(1);
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 70,
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 4,
+                          color: Color(0x40000000),
+                          offset: Offset(0, 4),
+                        )
+                      ],
+                      gradient: LinearGradient(
+                        colors: [
+                          HexColor(location.windIconColor).withAlpha(100),
+                          Color(0xFF2F2F2F).withAlpha(10),
+                          Color(0xFF2F2F2F)
+                        ],
+                        stops: [0, 0.6, 1],
+                        begin: AlignmentDirectional(0, -1),
+                        end: AlignmentDirectional(0, 1),
+                      ),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(),
+                            child: Align(
+                              alignment: AlignmentDirectional(0, 0),
+                              child: Text(
+                                '${location.distance} KM',
+                                textAlign: TextAlign.center,
+                                style:
+                                    Theme.of(context).textTheme.displayMedium,
+                              ),
+                            ),
                           ),
-                          shape: BoxShape.rectangle,
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(),
-                                child: Align(
+                        Expanded(
+                          flex: 4,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 100,
+                            decoration: BoxDecoration(),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: Text(location.locationName,
+                                        textAlign: TextAlign.start,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall),
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: Text(location.adres,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 0, 8, 0),
+                                    child: Transform.rotate(
+                                      angle: -location.windDirection *
+                                          (-math.pi / 180.0),
+                                      child: SvgPicture.asset(
+                                        'assets/location_item/wind_direction.svg',
+                                        height: 42,
+                                        width: 42,
+                                        fit: BoxFit.scaleDown,
+                                        color: HexColor(location.windIconColor),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: Text('${location.windSpeed}kn',
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displaySmall),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 0, 8, 0),
+                                    child: SvgPicture.asset(
+                                      'assets/location_item/weather_cloudy.svg',
+                                      height: 64,
+                                      width: 64,
+                                      color: DARK_PRIMARY_TEXT,
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                  ),
+                                ),
+                                Align(
                                   alignment: AlignmentDirectional(0, 0),
                                   child: Text(
-                                    '${location.distance} KM',
+                                    '5°C',
                                     textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.displayMedium,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall,
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                            Expanded(
-                              flex: 4,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 100,
-                                decoration: BoxDecoration(),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Align(
-                                        alignment: AlignmentDirectional(-1, 0),
-                                        child: Text(
-                                          location.locationName,
-                                          textAlign: TextAlign.start,
-                                          style: Theme.of(context).textTheme.headlineSmall
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: AlignmentDirectional(-1, 0),
-                                        child: Text(
-                                          location.adres,
-                                          style: Theme.of(context).textTheme.bodySmall
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      flex: 3,
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
-                                        child: Transform.rotate(angle: -location.windDirection * (-math.pi / 180.0),child: SvgPicture.asset(
-                                          'assets/location_item/wind_direction.svg',
-                                          height: 42,
-                                          width: 42,
-                                          fit: BoxFit.scaleDown,
-                                          color: HexColor(location.windIconColor),
-                                        ),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Text(
-                                        '${location.windSpeed}kn',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context).textTheme.displaySmall
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      flex: 3,
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
-                                        child: SvgPicture.asset(
-                                          'assets/location_item/weather_cloudy.svg',
-                                          height: 64,
-                                          width: 64,
-                                          color: DARK_PRIMARY_TEXT,
-                                          fit: BoxFit.scaleDown,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Text(
-                                        '5°C',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context).textTheme.displaySmall,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    );
-                  }
-              ),
-            )
-          ]
-
-      )
-
-  );
-
+                      ],
+                    ),
+                  ),
+                );
+              }),
+        )
+      ]));
 
   void searchSession(String query) {
-    final suggestions = allLocations.where((session){
+    final suggestions = allLocations.where((session) {
+      if(query.isEmpty) {
+        return false;
+      }
+
       final sessionLocation = session.locationName.toLowerCase();
       final input = query.toLowerCase();
 

@@ -11,8 +11,6 @@ ThemeData customDarkTheme() {
   final ThemeData darkTheme = ThemeData.dark();
   return darkTheme.copyWith(
     scaffoldBackgroundColor: DARK_BACKGROUND_PRIMARY,
-    primaryColor: Colors.white10,
-    indicatorColor: Color(0xFF807A6B),
     textTheme: darkTheme.textTheme.copyWith(
         labelSmall: TextStyle(
             color: DARK_SECONDARY_TEXT,
