@@ -8,7 +8,7 @@ import '../constants.dart';
 import '../helpers/hexcolor.dart';
 
 class LocationItemWidget extends StatelessWidget {
-  LocationItemWidget({Key? key, required Location location}) : this.location = location, super(key: key);
+  LocationItemWidget({required Location location}) : this.location = location;
 
   Location location;
 

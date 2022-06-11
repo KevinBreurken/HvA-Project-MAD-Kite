@@ -13,8 +13,10 @@ class LocationListPage extends StatefulWidget {
 }
 
 class _LocationListPage extends State<LocationListPage> {
-  List<Location> sessions = allLocations;
-  List<Location> favoriteSpots = allFavoriteLocations;
+  List<Location> listToSearch = allLocations;
+  List<Location> favoriteSpots = [allLocations[2]];
+  //Dummycode to display some examples of spots nearby
+  List<Location> nearbySpots = [allLocations[0],allLocations[1]];
 
   final controller = TextEditingController();
 
@@ -30,7 +32,7 @@ class _LocationListPage extends State<LocationListPage> {
       appBar: null,
       backgroundColor: DARK_BACKGROUND_PRIMARY,
       body: Column(children: <Widget>[
-        //Search Group
+        //Favorite Spots
         Container(
           child: Column(
             children: [
@@ -42,19 +44,57 @@ class _LocationListPage extends State<LocationListPage> {
                 child: Row(
                   children: [
                     Text(
-                      'Search spots',
+                      'Favorite Spots',
                       textAlign: TextAlign.left,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
                 ),
               ),
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: favoriteSpots.length,
+                  itemBuilder: (context, index) {
+                    final location = favoriteSpots[index];
+
+                    return LocationItemWidget(location: location);
+                  }),
             ],
           ),
         ),
-        //Search Group
+        //Nearby Spots
         Container(
           child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                decoration: BoxDecoration(
+                  color: HexColor('484848'),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      'Nearby Spots',
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ],
+                ),
+              ),
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: nearbySpots.length,
+                  itemBuilder: (context, index) {
+                    final location = nearbySpots[index];
+
+                    return LocationItemWidget(location: location);
+                  }),
+            ],
+          ),
+        ),
+        //Search Spots
+        Container(
+          child: Expanded(child:Column(
             children: [
               Container(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
@@ -75,7 +115,7 @@ class _LocationListPage extends State<LocationListPage> {
                 decoration: BoxDecoration(
                   color: HexColor('484848'),
                 ),
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                 child: TextField(
                   controller: controller,
                   decoration: InputDecoration(
@@ -92,7 +132,16 @@ class _LocationListPage extends State<LocationListPage> {
                   onChanged: searchSession,
                 ),
               ),
-            ],
+              ListView.builder(
+
+                  shrinkWrap: true,
+                  itemCount: listToSearch.length,
+                  itemBuilder: (context, index) {
+                    final location = listToSearch[index];
+
+                    return LocationItemWidget(location: location);
+                  }),
+            ],),
           ),
         ),
 
@@ -137,15 +186,6 @@ class _LocationListPage extends State<LocationListPage> {
         //     ],
         //   ),
         // ),
-        Expanded(
-          child: ListView.builder(
-              itemCount: sessions.length,
-              itemBuilder: (context, index) {
-                final location = sessions[index];
-
-                return LocationItemWidget(location: location);
-              }),
-        )
       ]));
 
   void searchSession(String query) {
@@ -160,6 +200,6 @@ class _LocationListPage extends State<LocationListPage> {
       return sessionLocation.contains(input);
     }).toList();
 
-    setState(() => sessions = suggestions);
+    setState(() => listToSearch = suggestions);
   }
 }
