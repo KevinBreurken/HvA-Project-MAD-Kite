@@ -19,7 +19,8 @@ class KiteupStatusPage extends StatefulWidget {
   KiteupStatusPage(this.callbackSetState);
 
   @override
-  _KiteupStatusPageState createState() => _KiteupStatusPageState(callbackSetState);
+  _KiteupStatusPageState createState() =>
+      _KiteupStatusPageState(callbackSetState);
 }
 
 class _KiteupStatusPageState extends State<KiteupStatusPage>
@@ -87,7 +88,17 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
             }),
             onEnded: () => {
               status = 'Kitesurfing',
-              storage.setString('kiteup-status', status!)
+              storage.setString('kiteup-status', status!),
+              stopWatchTimer.onExecute.add(StopWatchExecute.stop),
+              stopWatchTimer = StopWatchTimer(
+                presetMillisecond: startTimerValue! * 1000,
+                mode: StopWatchMode.countUp,
+                onChangeRawSecond: (value) => setState(() {
+                  timer = formatHHMMSS(value);
+                  storage.setInt('kiteup-timer', value);
+                }),
+              ),
+              stopWatchTimer.onExecute.add(StopWatchExecute.start),
             },
           );
           stopWatchTimer.onExecute.add(StopWatchExecute.start);
@@ -160,7 +171,9 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
-                                  svgFile,
+                                  svgFile.isNotEmpty == true
+                                      ? svgFile
+                                      : 'unknown.svg',
                                   height: 95,
                                   color: PRIMARY,
                                 ),
@@ -236,8 +249,6 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                     builder: (context) {
                       return ModalRating();
                     }),
-                status = 'Traveling',
-                storage.setString('kiteup-status', status!),
                 callbackSetState(1),
                 Navigator.pushNamed(context, '')
               };
