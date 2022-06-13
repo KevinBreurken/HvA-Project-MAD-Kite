@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kiteup/dummy%20data/locations.dart';
 import 'package:kiteup/widgets/item_location.dart';
+import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
 import '../constants.dart';
@@ -32,7 +33,17 @@ class _LocationListPage extends State<LocationListPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+
+    final _selectedLocationNotifier =
+      Provider.of<SelectedLocationNotifier>(context);
+
+    void onLocationCLick(Location location){
+      _selectedLocationNotifier.updateSelectedLocation(location);
+      Navigator.pushNamed(context, 'location_details');
+    }
+
+    return Scaffold(
       appBar: null,
       backgroundColor: DARK_BACKGROUND_PRIMARY,
       body: Column(children: <Widget>[
@@ -61,7 +72,7 @@ class _LocationListPage extends State<LocationListPage> {
                   itemBuilder: (context, index) {
                     final location = favoriteSpots[index];
 
-                    return LocationItemWidget(location: location);
+                    return LocationItemWidget(location: location, clickButtonFunction: () { onLocationCLick(location); });
                   }),
             ],
           ),
@@ -90,8 +101,11 @@ class _LocationListPage extends State<LocationListPage> {
                   itemCount: nearbySpots.length,
                   itemBuilder: (context, index) {
                     final location = nearbySpots[index];
-
-                    return LocationItemWidget(location: location);
+                    return LocationItemWidget(location: location, clickButtonFunction: () { onLocationCLick(location); });
+                    return LocationItemWidget(location: location, clickButtonFunction: () {
+                      _selectedLocationNotifier.updateSelectedLocation(location);
+                      Navigator.pushNamed(context, 'location_details');
+                    },);
                   }),
             ],
           ),
@@ -143,7 +157,7 @@ class _LocationListPage extends State<LocationListPage> {
                   itemBuilder: (context, index) {
                     final location = listToSearch[index];
 
-                    return LocationItemWidget(location: location);
+                    return LocationItemWidget(location: location, clickButtonFunction: () { onLocationCLick(location); });
                   }),
             ],),
           ),
@@ -191,6 +205,7 @@ class _LocationListPage extends State<LocationListPage> {
         //   ),
         // ),
       ]));
+  }
 
   void searchSession(String query) {
     final suggestions = allLocations.where((session) {

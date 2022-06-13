@@ -8,17 +8,18 @@ import '../constants.dart';
 import '../helpers/hexcolor.dart';
 
 class LocationItemWidget extends StatelessWidget {
-  LocationItemWidget({required Location location}) : this.location = location;
+  LocationItemWidget({required Location location, required this.clickButtonFunction}) : this.location = location;
 
   Location location;
+  final void Function() clickButtonFunction;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: clickButtonFunction
         // LocationListPage.setLocationIndex(index);
         // this.widget.callBackSetState(1);
-      },
+      ,
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 70,
