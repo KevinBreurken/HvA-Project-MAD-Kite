@@ -6,8 +6,12 @@ import 'dart:math' as math;
 
 import '../constants.dart';
 import '../helpers/hexcolor.dart';
+import '../notifiers/notifier_selected_location.dart';
 
 class LocationListPage extends StatefulWidget {
+
+  LocationListPage();
+
   @override
   _LocationListPage createState() => _LocationListPage();
 }

@@ -8,6 +8,7 @@ import 'package:kiteup/notifiers/notifier_selected_location.dart';
 
 import 'package:kiteup/page/location_list_page.dart';
 import 'package:kiteup/page/kiteup_status_page.dart';
+import 'package:kiteup/page/location_state_manager.dart';
 import 'package:kiteup/page/map_page.dart';
 import 'package:kiteup/page/my_sessions_page.dart';
 import 'package:kiteup/page/settings_page.dart';
@@ -65,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      LocationListPage(),
+      LocationStateManager(callbackSetState),
       MySessionsPage(),
       MapPage(),
       SettingsPage()
@@ -106,4 +107,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  void callbackSetState(newIndex) {
+    setState(() {
+      currentIndex = newIndex;
+    });
+  }
+
+
 }
