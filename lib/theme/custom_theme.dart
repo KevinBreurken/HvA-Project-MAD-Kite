@@ -4,7 +4,7 @@ import '../constants.dart';
 
 ThemeData customLightTheme() {
   final ThemeData lightTheme = ThemeData.light();
-  return lightTheme;
+  return customDarkTheme();
 }
 
 ThemeData customDarkTheme() {
@@ -12,13 +12,19 @@ ThemeData customDarkTheme() {
   return darkTheme.copyWith(
     scaffoldBackgroundColor: DARK_BACKGROUND_PRIMARY,
     textTheme: darkTheme.textTheme.copyWith(
+        titleLarge: TextStyle(
+            color: DARK_SECONDARY_TEXT,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Roboto',
+            letterSpacing: 0.2),
         labelSmall: TextStyle(
             color: DARK_SECONDARY_TEXT,
             fontSize: 11,
             fontFamily: 'Roboto',
             letterSpacing: 0.2),
         headlineSmall: TextStyle(
-            color: DARK_PRIMARY_TEXT, fontSize: 20, fontFamily: 'Roboto'),
+            color: DARK_PRIMARY_TEXT, fontWeight: FontWeight.w200,fontSize: 20, fontFamily: 'Roboto'),
         bodySmall: TextStyle(
             color: DARK_BODY_SMALL, fontSize: 14, fontFamily: 'Roboto'),
         displaySmall: TextStyle(color: DARK_PRIMARY_TEXT, fontSize: 16),

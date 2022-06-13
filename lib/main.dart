@@ -32,7 +32,7 @@ void main() {
       create: (_) => KiteupStatusNotifier(),
     ),
     ChangeNotifierProvider<ThemeNotifier>(
-        create: (_) => ThemeNotifier(customDarkTheme()),
+        create: (_) => ThemeNotifier(customLightTheme()),
     ),
   ], child: MyApp()));
 }

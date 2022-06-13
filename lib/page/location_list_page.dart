@@ -45,7 +45,6 @@ class _LocationListPage extends State<LocationListPage> {
 
     return Scaffold(
       appBar: null,
-      backgroundColor: DARK_BACKGROUND_PRIMARY,
       body: Column(children: <Widget>[
         //Favorite Spots
         Container(
@@ -54,7 +53,7 @@ class _LocationListPage extends State<LocationListPage> {
               Container(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 decoration: BoxDecoration(
-                  color: HexColor('484848'),
+                  color: Theme.of(context).backgroundColor,
                 ),
                 child: Row(
                   children: [
@@ -102,10 +101,6 @@ class _LocationListPage extends State<LocationListPage> {
                   itemBuilder: (context, index) {
                     final location = nearbySpots[index];
                     return LocationItemWidget(location: location, clickButtonFunction: () { onLocationCLick(location); });
-                    return LocationItemWidget(location: location, clickButtonFunction: () {
-                      _selectedLocationNotifier.updateSelectedLocation(location);
-                      Navigator.pushNamed(context, 'location_details');
-                    },);
                   }),
             ],
           ),
@@ -151,12 +146,10 @@ class _LocationListPage extends State<LocationListPage> {
                 ),
               ),
               ListView.builder(
-
                   shrinkWrap: true,
                   itemCount: listToSearch.length,
                   itemBuilder: (context, index) {
                     final location = listToSearch[index];
-
                     return LocationItemWidget(location: location, clickButtonFunction: () { onLocationCLick(location); });
                   }),
             ],),

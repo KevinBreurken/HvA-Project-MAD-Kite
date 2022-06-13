@@ -13,18 +13,26 @@ class LocationItemWidget extends StatelessWidget {
   Location location;
   final void Function() clickButtonFunction;
 
+  String getAssetPathByWeather(WeatherType weatherType){
+    switch(weatherType){
+      case WeatherType.sunny:
+        return "weather_sunny.svg";
+      case WeatherType.raining:
+        return "weather_raining.svg";
+      case WeatherType.cloudy:
+        return "weather_cloudy.svg";
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: clickButtonFunction
-        // LocationListPage.setLocationIndex(index);
-        // this.widget.callBackSetState(1);
-      ,
+      onTap: clickButtonFunction,
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 70,
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(color: DARK_BACKGROUND_PRIMARY,
           boxShadow: [
             BoxShadow(
               blurRadius: 4,
@@ -141,9 +149,9 @@ class LocationItemWidget extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                         child: SvgPicture.asset(
-                          'assets/location_item/weather_cloudy.svg',
-                          height: 64,
-                          width: 64,
+                          'assets/location_item/' +getAssetPathByWeather(location.weatherType),
+                          height: 32,
+                          width: 32,
                           color: DARK_PRIMARY_TEXT,
                           fit: BoxFit.scaleDown,
                         ),
