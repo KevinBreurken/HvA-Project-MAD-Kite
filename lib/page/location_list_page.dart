@@ -53,7 +53,7 @@ class _LocationListPage extends State<LocationListPage> {
               Container(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).backgroundColor,
+                  color: DARK_BACKGROUND_SECONDARY,
                 ),
                 child: Row(
                   children: [
@@ -83,7 +83,7 @@ class _LocationListPage extends State<LocationListPage> {
               Container(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 decoration: BoxDecoration(
-                  color: HexColor('484848'),
+                  color: DARK_BACKGROUND_SECONDARY,
                 ),
                 child: Row(
                   children: [
@@ -112,7 +112,7 @@ class _LocationListPage extends State<LocationListPage> {
               Container(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 decoration: BoxDecoration(
-                  color: HexColor('484848'),
+                  color: DARK_BACKGROUND_SECONDARY,
                 ),
                 child: Row(
                   children: [
@@ -133,8 +133,9 @@ class _LocationListPage extends State<LocationListPage> {
                   controller: controller,
                   decoration: InputDecoration(
                       filled: true,
-                      fillColor: HexColor('848484'),
+                      fillColor: LIGHT_THIRTH_TEXT,
                       prefixIcon: const Icon(Icons.search),
+                      focusColor: LIGHT_THIRTH_TEXT,
                       hintText: 'Search...',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),

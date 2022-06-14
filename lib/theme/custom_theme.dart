@@ -30,7 +30,7 @@ ThemeData customDarkTheme() {
             fontFamily: 'Roboto',
             letterSpacing: 0.2),
         headlineSmall: TextStyle(
-            color: DARK_PRIMARY_TEXT, fontWeight: FontWeight.w200,fontSize: 20, fontFamily: 'Roboto'),
+            color: DARK_PRIMARY_TEXT,fontSize: 20, fontFamily: 'Roboto'),
         bodySmall: TextStyle(
             color: DARK_BODY_SMALL, fontSize: 14, fontFamily: 'Roboto'),
         bodyMedium: TextStyle(
