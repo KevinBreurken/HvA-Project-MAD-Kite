@@ -7,7 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kiteup/constants.dart';
 import 'package:kiteup/dummy%20data/locations.dart';
 import 'package:kiteup/dummy%20data/users.dart';
+import 'package:kiteup/main.dart';
 import 'package:kiteup/notifiers/notifier_kiteup_status.dart';
+import 'package:kiteup/notifiers/notifier_planned_location.dart';
+import 'package:kiteup/page/location_state_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +31,8 @@ class KiteupLocationPage extends StatefulWidget {
 class _LocationInfoPageState extends State<KiteupLocationPage> {
   TimeOfDay selectedTime = TimeOfDay.now();
   String goingText = " Going";
+  Location? location;
+
   List<Event> events = [];
 
   _LocationInfoPageState();
@@ -38,13 +43,13 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
     });
   }
 
-  addEventItem(Event event){
+  addEventItem(Event event) {
     setState(() {
       allEvents.add(event);
     });
   }
 
-  addEvents(List<Event> events){
+  addEvents(List<Event> events) {
     setState(() {
       this.events.clear();
       this.events.addAll(events);
@@ -59,12 +64,26 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
 
     final _selectedLocationNotifier =
         Provider.of<SelectedLocationNotifier>(context);
-        
-    final _kiteupStatusNotifier =
-        Provider.of<KiteupStatusNotifier>(context);
+    location = _selectedLocationNotifier.selectedLocation;
 
-    List<Event> matchingEvents = fetchEvents(_selectedLocationNotifier.selectedLocation);
-    addEvents(matchingEvents);
+    final _kiteupStatusNotifier = Provider.of<KiteupStatusNotifier>(context);
+    final _plannedLocationNotifier =
+        Provider.of<PlannedLocationNotifier>(context);
+
+    if (location != null) {
+      List<Event> matchingEvents =
+          fetchEvents(_selectedLocationNotifier.selectedLocation!);
+      addEvents(matchingEvents);
+    }
+
+    if (_plannedLocationNotifier.plannedLocation != null) {
+      if (location!.locationName ==
+          _plannedLocationNotifier.plannedLocation!.locationName) {
+        goingText = _plannedLocationNotifier.plannedLocation!.arrivalTime!
+            .format(context);
+      }
+    }
+
     return Scaffold(
         appBar: null,
         body: Scaffold(
@@ -73,14 +92,14 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (goingText == " Going")
-                  BackButton(
-                      color: Colors.white,
-                      onPressed: () => {Navigator.pop(context)})
-                else
-                  Container(),
-                Text(_selectedLocationNotifier.selectedLocation.locationName,
-                    style: Theme.of(context).textTheme.headlineLarge),
+                BackButton(
+                    color: Colors.white,
+                    onPressed: () => {
+                          LocationStateManager.navigator.currentState!
+                              .pushNamed('location_list')
+                        }),
+                Text(_selectedLocationNotifier.selectedLocation!.locationName,
+                     style: Theme.of(context).textTheme.headlineLarge),
                 Container(
                   margin: const EdgeInsets.all(10),
                   child: IconButton(
@@ -202,39 +221,59 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
         ));
   }
 
-  fetchEvents(Location location){
-    return allEvents.where((event) => event.location == location && event.datetime != null && event.type == EventType.GOING).toList();
+  fetchEvents(Location location) {
+    return allEvents
+        .where((event) =>
+            event.location == location &&
+            event.datetime != null &&
+            event.type == EventType.GOING)
+        .toList();
   }
-  
-  _selectTime(BuildContext context, _kiteupStatusNotifier, _selectedLocationNotifier) async {          
-      final TimeOfDay? timeOfDay = await showTimePicker(
-        context: context,
-        initialTime: selectedTime,
-        initialEntryMode: TimePickerEntryMode.dial,
+
+  _selectTime(BuildContext context, _kiteupStatusNotifier,
+      PlannedLocationNotifier _plannedLocationNotifier) async {
+    final TimeOfDay? timeOfDay = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+      initialEntryMode: TimePickerEntryMode.dial,
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            primaryColor: Colors.green,
+            secondaryHeaderColor: Colors.green,
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (timeOfDay != null && timeOfDay != selectedTime) {
+      final now = DateTime.now();
+      final newDateTime = DateTime(
+          now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute);
+      final diff = newDateTime.difference(now);
+
+      location!.arrivalTime = timeOfDay;
+      _plannedLocationNotifier.updateLocation(location!);
+      SharedPreferences storage = await SharedPreferences.getInstance();
+      storage.setString('planned-location', jsonEncode(location));
+
+      // Add new event to the list of events
+      Event event = Event(
+        location: location!,
+        user: allUsers[0],
+        createdAt: DateTime.now(),
+        type: EventType.GOING,
+        datetime: DateTime.now().add(diff),
       );
 
-      if(timeOfDay != null && timeOfDay != selectedTime)
-        {
-          final now = DateTime.now();
-          final newDateTime = DateTime(now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute);
-          final diff = newDateTime.difference(now);
+      setGoingText(" " + timeOfDay.format(context));
+      _kiteupStatusNotifier.updateStatus("Traveling");
 
-          // Add new event to the list of events
-          Event event = Event(
-            location: _selectedLocationNotifier.selectedLocation,
-            user: allUsers[0],
-            createdAt: DateTime.now(),
-            type: EventType.GOING,
-            datetime: DateTime.now().add(diff),
-          );
-
-          setGoingText(" " + timeOfDay.format(context));
-          _kiteupStatusNotifier.updateStatus("Traveling");
-          
-          addEventItem(event);
-        } else {
-          setGoingText(" Going");
-          _kiteupStatusNotifier.updateStatus("");
-        }
+      addEventItem(event);
+    } else {
+      setGoingText(" Going");
+      _kiteupStatusNotifier.updateStatus("");
+    }
   }
 }

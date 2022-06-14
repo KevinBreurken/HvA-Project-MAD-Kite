@@ -15,6 +15,13 @@ class ModalRating extends StatefulWidget {
 }
 
 class _ModalRatingState extends State<ModalRating> {
+  late SharedPreferences storage;
+  late String locationName;
+  late String gear;
+  late DateTime start;
+  late DateTime end;
+  late Session session;
+
   @override
   Widget build(BuildContext context) {
     double rating = 3.0;
@@ -33,7 +40,7 @@ class _ModalRatingState extends State<ModalRating> {
       title: 'Rate this session',
       function: () async => {
         storage = await SharedPreferences.getInstance(),
-        locationName = _selectedLocationNotifier.selectedLocation.locationName,
+        locationName = _selectedLocationNotifier.selectedLocation!.locationName,
         gear = storage.getString('kiteup-board-data')!,
         end = DateTime.now(),
         start = end
