@@ -29,7 +29,6 @@ class _LocationListPage extends State<LocationListPage> {
   @override
   void initState() {
     super.initState();
-    print("Called");
     //Start empty
     getFavorites();
     searchSession("");
@@ -38,9 +37,6 @@ class _LocationListPage extends State<LocationListPage> {
   @override
   Widget build(BuildContext context) {
     getFavorites();
-    print(favoriteSpots.length);
-    final _favoriteLocationNotifier =
-    Provider.of<FavoriteLocationNotifier>(context);
 
     final _selectedLocationNotifier =
         Provider.of<SelectedLocationNotifier>(context);
@@ -54,7 +50,9 @@ class _LocationListPage extends State<LocationListPage> {
         appBar: null,
         body: Column(children: <Widget>[
           //Favorite Spots
-          Container(
+            Visibility(
+            visible: favoriteSpots.length > 0,
+            child:Container(
             child: Column(
               children: [
                 Container(
@@ -69,15 +67,13 @@ class _LocationListPage extends State<LocationListPage> {
                         textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                    ],
+                    ],),
                   ),
-                ),
                 ListView.builder(
                     shrinkWrap: true,
                     itemCount: favoriteSpots.length,
                     itemBuilder: (context, index) {
                       final location = favoriteSpots[index];
-
                       return LocationItemWidget(
                           location: location,
                           clickButtonFunction: () {
@@ -85,7 +81,7 @@ class _LocationListPage extends State<LocationListPage> {
                           });
                     }),
               ],
-            ),
+            ),),
           ),
           //Nearby Spots
           Container(
