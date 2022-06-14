@@ -34,6 +34,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   stop_watch_timer: ^1.3.0
   shared_preferences: ^2.0.15
+  json_annotation: ^4.5.0
+  intl: ^0.17.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -67,6 +69,7 @@ flutter:
     - assets/status_car.svg
     - assets/status_gear.svg
     - assets/status_kitesurfing.svg
+    - assets/unknown.svg
     - assets/location_item/weather_cloudy.svg
     - assets/location_item/wind_direction.svg
     - assets/graph.png

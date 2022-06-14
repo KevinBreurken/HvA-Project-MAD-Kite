@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kiteup/constants.dart';
+import 'package:kiteup/dummy%20data/sessions.dart';
 import 'package:kiteup/notifiers/notifier_rating_score.dart';
+import 'package:kiteup/notifiers/notifier_selected_location.dart';
 import 'package:kiteup/widgets/modals/modal_template.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class ModalRating extends StatefulWidget {
   @override
@@ -11,13 +15,38 @@ class ModalRating extends StatefulWidget {
 }
 
 class _ModalRatingState extends State<ModalRating> {
+  late SharedPreferences storage;
+  late String locationName;
+  late String gear;
+  late DateTime start;
+  late DateTime end;
+  late Session session;
+
   @override
   Widget build(BuildContext context) {
-    double? rating;
+    final SelectedLocationNotifier _selectedLocationNotifier =
+        Provider.of<SelectedLocationNotifier>(context);
+    double rating = 3.0;
 
     ModalTemplate dialog = ModalTemplate(
       title: 'Rate this session',
-      function: () => Navigator.pop(context, [rating]),
+      function: () async => {
+        storage = await SharedPreferences.getInstance(),
+        locationName = _selectedLocationNotifier.selectedLocation!.locationName,
+        gear = storage.getString('kiteup-board-data')!,
+        end = DateTime.now(),
+        start = end
+            .subtract(Duration(seconds: await storage.getInt('kiteup-timer')!)),
+        session = Session(
+            locationName: locationName,
+            gear: gear,
+            rating: rating,
+            start: DateFormat('HH:mm').format(start),
+            end: DateFormat('HH:mm').format(end),
+            date: DateFormat('yyyy-MM-dd').format(start)),
+        allSessions.add(session),
+        Navigator.pop(context, [rating])
+      },
     );
     dialog.child = Column(
       mainAxisSize: MainAxisSize.min,

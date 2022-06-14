@@ -131,7 +131,8 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                         flex: 1,
                       ),
                       Text(
-                        _selectedLocationNotifier.selectedLocation.locationName,
+                        _selectedLocationNotifier
+                            .selectedLocation!.locationName,
                         style: TextStyle(
                             color: DARK_PRIMARY_TEXT,
                             fontSize: 40,
@@ -160,7 +161,9 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
-                                  svgFile,
+                                  svgFile.isNotEmpty == true
+                                      ? svgFile
+                                      : 'assets/unknown.svg',
                                   height: 95,
                                   color: PRIMARY,
                                 ),
