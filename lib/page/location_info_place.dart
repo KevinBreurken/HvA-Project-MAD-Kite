@@ -76,10 +76,7 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                 else
                   Container(),
                 Text(_selectedLocationNotifier.selectedLocation.locationName,
-                    style: TextStyle(
-                        color: DARK_PRIMARY_TEXT,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold)),
+                    style: Theme.of(context).textTheme.headlineLarge),
                 Container(
                   margin: const EdgeInsets.all(10),
                   child: const Icon(
@@ -96,11 +93,8 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                 alignment: Alignment.centerLeft,
                 child: Container(
                     margin: const EdgeInsetsDirectional.fromSTEB(15, 30, 0, 0),
-                    child: const Text("Activity",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        )))),
+                    child: Text("Activity",
+                      style: Theme.of(context).textTheme.titleLarge))),
             Expanded(
               child: SizedBox(
                 height: 200,
@@ -111,9 +105,11 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                       height: 25,
                       child: Center(child: Row(
                         children: [
-                          Text(event.createdAt.hour.toString() + ":" + event.createdAt.minute.toString(), style: const TextStyle(color: Colors.white)),
+                          Text(event.createdAt.hour.toString() + ":" + event.createdAt.minute.toString(),
+                              style: Theme.of(context).textTheme.bodyMedium),
                           const SizedBox(width: 20),
-                          Text(event.user.name + " will arive at " + (event.datetime!.hour.toString() + ":" + event.datetime!.minute.toString()), style: const TextStyle(color: Colors.white)),
+                          Text(event.user.name + " will arive at " + (event.datetime!.hour.toString() + ":" + event.datetime!.minute.toString()),
+                              style: Theme.of(context).textTheme.bodyMedium),
                         ],
                       )),
                     );
@@ -130,7 +126,7 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
           ElevatedButton.icon(
             onPressed: (){_selectTime(context, _kiteupStatusNotifier, _selectedLocationNotifier);},
             label: Text(
-              "Kite-up",
+              goingText,
               style: TextStyle(color: BUTTON_PRIMARY_TEXT, fontSize: 20),
             ),
             icon: SvgPicture.asset(
@@ -187,85 +183,6 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
       Spacer(flex: 3),
       ],
     ),
-            ButtonBar(
-              mainAxisSize: MainAxisSize.min,
-              buttonHeight: 10,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    _selectTime(context, _kiteupStatusNotifier, _selectedLocationNotifier);
-                  },
-                  child: Container(
-                    width: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.green,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.green.shade600, spreadRadius: 3),
-                      ],
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          "assets/status_car.svg",
-                          width: 20,
-                          color: Colors.white,
-                        ),
-                        Text(goingText,
-                            style: const TextStyle(color: Colors.white)),
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    var sessionData = await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return ModalSession();
-                        });
-
-                    if (sessionData[0] != null &&
-                        sessionData[1] != null &&
-                        sessionData[2] != null) {
-                      var endDateTime =
-                          DateTime.now().add(Duration(seconds: sessionData[2]));
-                      var storage = await SharedPreferences.getInstance();
-                      await storage.setString('kiteup-status', 'Gear-Up');
-                      await storage.setString(
-                          'kiteup-preparation-time', endDateTime.toString());
-                      await storage.setString(
-                          'kiteup-board-data',
-                          boardSizes[sessionData[0]] +
-                              ', ' +
-                              boardTypes[sessionData[1]]);
-                      Navigator.pushNamed(context, 'kiteup_status_page');
-                    }
-                  },
-                  child: Container(
-                    width: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.green,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.green.shade600, spreadRadius: 3),
-                      ],
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.check, color: Colors.white),
-                        Text("Kite-up",
-                            style: TextStyle(color: Colors.white)),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            )
           ]),
         ));
   }

@@ -16,11 +16,11 @@ class LocationItemWidget extends StatelessWidget {
   String getAssetPathByWeather(WeatherType weatherType){
     switch(weatherType){
       case WeatherType.sunny:
-        return "weather_sunny.svg";
+        return 'weather_sunny.svg';
       case WeatherType.raining:
-        return "weather_raining.svg";
+        return 'weather_raining.svg';
       case WeatherType.cloudy:
-        return "weather_cloudy.svg";
+        return 'weather_cloudy.svg';
     }
   }
   
@@ -149,7 +149,7 @@ class LocationItemWidget extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                         child: SvgPicture.asset(
-                          'assets/location_item/' +getAssetPathByWeather(location.weatherType),
+                          'assets/location_item/' + getAssetPathByWeather(location.weatherType),
                           height: 32,
                           width: 32,
                           color: DARK_PRIMARY_TEXT,
