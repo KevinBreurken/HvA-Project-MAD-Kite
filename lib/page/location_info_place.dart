@@ -123,6 +123,70 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                 )
               )
             ),
+            Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+            Spacer(flex: 3),
+          ElevatedButton.icon(
+            onPressed: (){_selectTime(context, _kiteupStatusNotifier, _selectedLocationNotifier);},
+            label: Text(
+              "Kite-up",
+              style: TextStyle(color: BUTTON_PRIMARY_TEXT, fontSize: 20),
+            ),
+            icon: SvgPicture.asset(
+              "assets/status_car.svg",
+              width: 20,
+              color: Colors.white,
+            ),
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.only(left: 30, top: 20, bottom: 20, right: 30),
+                primary: BUTTON_PRIMARY,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(180))),
+          ),
+      Spacer(flex: 1),
+            ElevatedButton.icon(
+              onPressed: ()async {
+                var sessionData = await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ModalSession();
+                    });
+
+                if (sessionData[0] != null &&
+                    sessionData[1] != null &&
+                    sessionData[2] != null) {
+                  var endDateTime =
+                  DateTime.now().add(Duration(seconds: sessionData[2]));
+                  var storage = await SharedPreferences.getInstance();
+                  await storage.setString('kiteup-status', 'Gear-Up');
+                  await storage.setString(
+                      'kiteup-preparation-time', endDateTime.toString());
+                  await storage.setString(
+                      'kiteup-board-data',
+                      boardSizes[sessionData[0]] +
+                          ', ' +
+                          boardTypes[sessionData[1]]);
+                  Navigator.pushNamed(context, 'kiteup_status_page');
+                }
+              },
+              label: Text(
+                "Kite-up",
+                style: TextStyle(color: BUTTON_PRIMARY_TEXT, fontSize: 20),
+              ),
+              icon: Icon(
+                Icons.check,
+                color: BUTTON_PRIMARY_TEXT,
+              ),
+              style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.only(left: 30, top: 20, bottom: 20, right: 30),
+                  primary: BUTTON_PRIMARY,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(180))),
+            ),
+      Spacer(flex: 3),
+      ],
+    ),
             ButtonBar(
               mainAxisSize: MainAxisSize.min,
               buttonHeight: 10,
