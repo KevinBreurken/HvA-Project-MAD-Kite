@@ -15,7 +15,7 @@ class Location {
   final num windDirection;
   final String windIconColor;
   final num temperature;
-  final WeatherType weatherType;
+  final WeatherType? weatherType;
   TimeOfDay? arrivalTime;
 
   bool isLiked;
@@ -41,7 +41,7 @@ class Location {
         windDirection = json['windDirection'],
         windIconColor = json['windIconColor'],
         temperature = json['temperature'],
-        isLiked =json['isLiked'],
+        isLiked = json['isLiked'],
         weatherType = WeatherType.values.byName(json['weatherType']),
         arrivalTime = TimeOfDay(
           hour: json['arrivalTime']['hour'],
@@ -58,6 +58,7 @@ class Location {
       'windDirection': windDirection,
       'windIconColor': windIconColor,
       'temperature': temperature,
+      'isLiked': isLiked,
       'weatherType': weatherType?.name,
       'arrivalTime': {
         'hour': arrivalTime?.hour,

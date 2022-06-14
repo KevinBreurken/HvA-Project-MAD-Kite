@@ -13,7 +13,7 @@ class LocationItemWidget extends StatelessWidget {
   Location location;
   final void Function() clickButtonFunction;
 
-  String getAssetPathByWeather(WeatherType weatherType){
+  String getAssetPathByWeather(WeatherType ?weatherType){
     switch(weatherType){
       case WeatherType.sunny:
         return 'weather_sunny.svg';
@@ -21,7 +21,10 @@ class LocationItemWidget extends StatelessWidget {
         return 'weather_raining.svg';
       case WeatherType.cloudy:
         return 'weather_cloudy.svg';
+      case null:
+        break;
     }
+    return "";
   }
   
   @override
