@@ -25,6 +25,7 @@ class _LocationStateManagerState extends State<LocationStateManager> {
   Function callbackSetState;
   Function callbackSetRoute;
   GlobalKey<NavigatorState> navigator;
+  String initialRoute = 'location_list';
 
   _LocationStateManagerState(
       this.callbackSetState, this.navigator, this.callbackSetRoute);
@@ -35,6 +36,7 @@ class _LocationStateManagerState extends State<LocationStateManager> {
         appBar: null,
         body: Stack(children: <Widget>[
           Navigator(
+            initialRoute: initialRoute,
             key: navigator,
             onGenerateRoute: (settings) {
               WidgetsBinding.instance!

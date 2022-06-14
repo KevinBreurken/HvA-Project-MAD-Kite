@@ -32,7 +32,7 @@ class _BottomBarTravellingState extends State<BottomBarTravelling> {
                 child: Container(
                     color: DARK_BACKGROUND_PRIMARY,
                     child: Container(
-                        height: 70,
+                        height: 75,
                         width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius:

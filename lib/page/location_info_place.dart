@@ -65,9 +65,11 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
     final _plannedLocationNotifier =
         Provider.of<PlannedLocationNotifier>(context);
 
-    List<Event> matchingEvents =
-        fetchEvents(_selectedLocationNotifier.selectedLocation!);
-    addEvents(matchingEvents);
+    if (location != null) {
+      List<Event> matchingEvents =
+          fetchEvents(_selectedLocationNotifier.selectedLocation!);
+      addEvents(matchingEvents);
+    }
 
     if (_plannedLocationNotifier.plannedLocation != null) {
       if (location!.locationName ==
