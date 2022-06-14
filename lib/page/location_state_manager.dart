@@ -1,13 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:kiteup/constants.dart';
-import 'package:kiteup/dummy%20data/locations.dart';
 import 'package:kiteup/page/kiteup_status_page.dart';
 import 'package:kiteup/page/location_info_place.dart';
 import 'package:kiteup/page/location_list_page.dart';
-import 'package:kiteup/widgets/bottom_bar_travelling.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationStateManager extends StatefulWidget {
   Function callbackSetState;
@@ -39,16 +33,16 @@ class _LocationStateManagerState extends State<LocationStateManager> {
             initialRoute: initialRoute,
             key: navigator,
             onGenerateRoute: (settings) {
-              WidgetsBinding.instance!
+              WidgetsBinding.instance
                   .addPostFrameCallback((_) => callbackSetRoute(settings.name));
               switch (settings.name) {
                 case 'location_list':
                   return MaterialPageRoute(
-                    builder: (context) => LocationListPage(),
+                    builder: (context) => const LocationListPage(),
                   );
                 case 'location_details':
                   return MaterialPageRoute(
-                    builder: (context) => KiteupLocationPage(),
+                    builder: (context) => const KiteupLocationPage(),
                   );
                 case 'kiteup_status_page':
                   return MaterialPageRoute(
@@ -56,7 +50,7 @@ class _LocationStateManagerState extends State<LocationStateManager> {
                   );
                 default:
                   return MaterialPageRoute(
-                    builder: (context) => LocationListPage(),
+                    builder: (context) => const LocationListPage(),
                   );
               }
             },

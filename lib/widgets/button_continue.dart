@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kiteup/constants.dart';
 
 class ButtonContinue extends StatelessWidget {
-  ButtonContinue(this.text, this.function);
+  const ButtonContinue(this.text, this.function);
   final String text;
   final void Function() function;
 
@@ -18,7 +18,7 @@ class ButtonContinue extends StatelessWidget {
           color: BUTTON_PRIMARY_TEXT,
         ),
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.only(left: 30, top: 20, bottom: 20, right: 30),
+            padding: const EdgeInsets.only(left: 30, top: 20, bottom: 20, right: 30),
             primary: BUTTON_PRIMARY,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(180))),

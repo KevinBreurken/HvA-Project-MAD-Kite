@@ -16,21 +16,21 @@ class Session {
 }
 
 var allSessions = [
-  Session(
+  const Session(
       locationName: 'Castricum aan zee',
       gear: '9m2, twin-tip',
       rating: 4,
       start: '14:00',
       end: '15:33',
       date: '2022-3-12'),
-  Session(
+  const Session(
       locationName: 'Zeeland',
       gear: '9m2, twin-tip',
       rating: 5,
       start: '14:00',
       end: '15:33',
       date: '2022-5-30'),
-  Session(
+  const Session(
       locationName: 'Limburg',
       gear: '9m2, twin-tip',
       rating: 1,

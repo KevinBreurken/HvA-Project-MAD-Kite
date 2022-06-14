@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kiteup/constants.dart';
-import 'package:kiteup/notifiers/notifier_kiteup_status.dart';
 import 'package:kiteup/notifiers/notifier_selected_location.dart';
-import 'package:kiteup/page/my_sessions_page.dart';
+import 'package:kiteup/page/location_state_manager.dart';
 import 'package:kiteup/widgets/modals/modal_cancel.dart';
 import 'package:kiteup/widgets/modals/modal_rating.dart';
-import 'package:kiteup/widgets/modals/modal_session.dart';
-import 'package:kiteup/widgets/modals/modal_session_data.dart';
 import 'package:kiteup/widgets/status_page_buttons.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,7 +51,7 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
   @override
   void initState() {
     _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
     _animationController.repeat(reverse: true);
     _animation = Tween(begin: 3.0, end: 8.0).animate(_animationController)
       ..addListener(() {
@@ -138,7 +135,7 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                      Spacer(
+                      const Spacer(
                         flex: 1,
                       ),
                       Text(
@@ -149,21 +146,21 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                             fontSize: 40,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 100),
+                      const SizedBox(height: 100),
                       Container(
                           width: 237,
                           height: 237,
                           decoration: BoxDecoration(
                             color: DARK_BACKGROUND_PRIMARY,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(180)),
+                                const BorderRadius.all(Radius.circular(180)),
                             boxShadow: [
                               BoxShadow(
                                 color: PRIMARY,
                                 spreadRadius: _animation.value,
                                 blurRadius: _animation.value,
-                                offset:
-                                    Offset(0, 0), // changes position of shadow
+                                offset: const Offset(
+                                    0, 0), // changes position of shadow
                               ),
                             ],
                           ),
@@ -178,7 +175,7 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                                   height: 95,
                                   color: PRIMARY,
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 Text(
                                   status!,
                                   style: TextStyle(
@@ -192,16 +189,16 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                               ],
                             ),
                           )),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Text(
                         timer,
                         style:
                             TextStyle(color: DARK_PRIMARY_TEXT, fontSize: 24),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       StatusPageButtons(buttonContinueText,
                           buttonContinueFunction, buttonStopFunction),
-                      Spacer(
+                      const Spacer(
                         flex: 1,
                       ),
                     ])))));
@@ -228,12 +225,21 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                 ),
                 stopWatchTimer.onExecute.add(StopWatchExecute.start)
               };
-          buttonStopFunction = () => {
-                showDialog(
+
+          String? reason;
+          buttonStopFunction = () async => {
+                reason = await showDialog(
                     context: context,
                     builder: (context) {
                       return ModalCancel();
-                    })
+                    }),
+                if (reason != null)
+                  {
+                    storage.remove('kiteup-status'),
+                    storage.remove('kiteup-preparation-time'),
+                    LocationStateManager.navigator.currentState!
+                        .pushNamed('location_list')
+                  }
               };
         });
         break;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kiteup/constants.dart';
 import 'package:kiteup/dummy%20data/sessions.dart';
-import 'package:kiteup/notifiers/notifier_rating_score.dart';
 import 'package:kiteup/notifiers/notifier_selected_location.dart';
 import 'package:kiteup/widgets/modals/modal_template.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +10,7 @@ import 'package:intl/intl.dart';
 
 class ModalRating extends StatefulWidget {
   @override
-  State createState() => new _ModalRatingState();
+  State createState() => _ModalRatingState();
 }
 
 class _ModalRatingState extends State<ModalRating> {
@@ -44,7 +43,7 @@ class _ModalRatingState extends State<ModalRating> {
         gear = storage.getString('kiteup-board-data')!,
         end = DateTime.now(),
         start = end
-            .subtract(Duration(seconds: await storage.getInt('kiteup-timer')!)),
+            .subtract(Duration(seconds: storage.getInt('kiteup-timer')!)),
         session = Session(
             locationName: locationName,
             gear: gear,
@@ -59,7 +58,7 @@ class _ModalRatingState extends State<ModalRating> {
     dialog.child = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        SizedBox(
           height: 32,
           width: double.infinity,
           child: Text('How was this kite session',
@@ -71,7 +70,7 @@ class _ModalRatingState extends State<ModalRating> {
           direction: Axis.horizontal,
           allowHalfRating: true,
           itemCount: 5,
-          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+          itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
           itemBuilder: (context, _) => Icon(
             Icons.star,
             color: RATING,

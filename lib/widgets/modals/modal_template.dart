@@ -13,7 +13,7 @@ class ModalTemplate extends StatefulWidget {
   late void Function() function;
 
   @override
-  State createState() => new _ModalTemplateState();
+  State createState() => _ModalTemplateState();
 }
 
 class _ModalTemplateState extends State<ModalTemplate> {
@@ -29,14 +29,14 @@ class _ModalTemplateState extends State<ModalTemplate> {
       ),
       backgroundColor: DARK_BACKGROUND_PRIMARY,
       content: Column(mainAxisSize: MainAxisSize.min, children: [
-        Container(
+        SizedBox(
           height: 32,
           width: double.infinity,
           child: Text(_selectedLocationNotifier.selectedLocation!.locationName,
               style: TextStyle(color: PRIMARY, fontSize: 12)),
         ),
         if (widget.child != null) widget.child!,
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         ModalButtons(widget.function),

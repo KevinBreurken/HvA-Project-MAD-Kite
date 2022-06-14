@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kiteup/constants.dart';
-import 'package:kiteup/dummy%20data/locations.dart';
 import 'package:kiteup/helpers/hexcolor.dart';
 import 'package:kiteup/notifiers/notifier_planned_location.dart';
 import 'package:kiteup/notifiers/notifier_selected_location.dart';
@@ -138,6 +137,6 @@ class _BottomBarTravellingState extends State<BottomBarTravelling> {
                                     ]))
                           ],
                         ))))
-            : SizedBox(height: 0));
+            : const SizedBox(height: 0));
   }
 }

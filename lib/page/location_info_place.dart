@@ -7,14 +7,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kiteup/constants.dart';
 import 'package:kiteup/dummy%20data/locations.dart';
 import 'package:kiteup/dummy%20data/users.dart';
-import 'package:kiteup/main.dart';
 import 'package:kiteup/notifiers/notifier_kiteup_status.dart';
 import 'package:kiteup/notifiers/notifier_planned_location.dart';
 import 'package:kiteup/page/location_state_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../notifiers/notifier_favorite_location.dart';
 import '../notifiers/notifier_selected_location.dart';
 import '../widgets/modals/modal_session.dart';
 import '../widgets/modals/modal_session_data.dart';
@@ -22,7 +20,7 @@ import '../widgets/modals/modal_session_data.dart';
 import 'package:kiteup/dummy%20data/events.dart';
 
 class KiteupLocationPage extends StatefulWidget {
-  KiteupLocationPage();
+  const KiteupLocationPage();
 
   @override
   _LocationInfoPageState createState() => _LocationInfoPageState();
@@ -58,7 +56,6 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final _selectedLocationNotifier =
         Provider.of<SelectedLocationNotifier>(context);
     location = _selectedLocationNotifier.selectedLocation;
@@ -96,29 +93,32 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                               .pushNamed('location_list')
                         }),
                 Text(_selectedLocationNotifier.selectedLocation!.locationName,
-                     style: Theme.of(context).textTheme.headlineLarge),
+                    style: Theme.of(context).textTheme.headlineLarge),
                 Container(
                   margin: const EdgeInsets.all(10),
                   child: IconButton(
                       onPressed: () {
                         setState(() {
-                          if(_selectedLocationNotifier.selectedLocation != null){
-                            var loc = _selectedLocationNotifier.selectedLocation;
+                          if (_selectedLocationNotifier.selectedLocation !=
+                              null) {
+                            var loc =
+                                _selectedLocationNotifier.selectedLocation;
                             loc?.isLiked = !loc.isLiked;
                           }
                           // _favoriteLocationNotifier.updateScore(_selectedLocationNotifier.selectedLocation.isLiked);
                         });
-
                       },
-                      icon: _selectedLocationNotifier.selectedLocation?.isLiked == true
-                          ? const Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      )
-                          : const Icon(
-                        Icons.favorite_border,
-                        color: Colors.white,
-                      )),
+                      icon:
+                          _selectedLocationNotifier.selectedLocation?.isLiked ==
+                                  true
+                              ? const Icon(
+                                  Icons.favorite,
+                                  color: Colors.red,
+                                )
+                              : const Icon(
+                                  Icons.favorite_border,
+                                  color: Colors.white,
+                                )),
                 ),
               ],
             ),
@@ -128,95 +128,113 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                 child: Container(
                     margin: const EdgeInsetsDirectional.fromSTEB(15, 30, 0, 0),
                     child: Text("Activity",
-                      style: Theme.of(context).textTheme.titleLarge))),
+                        style: Theme.of(context).textTheme.titleLarge))),
             Expanded(
-              child: SizedBox(
-                height: 200,
-                child: ListView.builder(
-                  itemBuilder: (context, position) {
-                    Event event = events[position];
-                    return Container(
-                      height: 25,
-                      child: Center(child: Row(
-                        children: [
-                          Text(event.createdAt.hour.toString() + ":" + event.createdAt.minute.toString(),
-                              style: Theme.of(context).textTheme.bodyMedium),
-                          const SizedBox(width: 20),
-                          Text(event.user.name + " will arive at " + (event.datetime!.hour.toString() + ":" + event.datetime!.minute.toString()),
-                              style: Theme.of(context).textTheme.bodyMedium),
-                        ],
-                      )),
-                    );
-                  },
-                  padding: const EdgeInsetsDirectional.fromSTEB(15, 5, 0, 0),
-                  itemCount: events.length,
-                )
-              )
-            ),
+                child: SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      itemBuilder: (context, position) {
+                        Event event = events[position];
+                        return Container(
+                          height: 25,
+                          child: Center(
+                              child: Row(
+                            children: [
+                              Text(
+                                  event.createdAt.hour.toString() +
+                                      ":" +
+                                      event.createdAt.minute.toString(),
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
+                              const SizedBox(width: 20),
+                              Text(
+                                  event.user.name +
+                                      " will arive at " +
+                                      (event.datetime!.hour.toString() +
+                                          ":" +
+                                          event.datetime!.minute.toString()),
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
+                            ],
+                          )),
+                        );
+                      },
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(15, 5, 0, 0),
+                      itemCount: events.length,
+                    ))),
             Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-            Spacer(flex: 3),
-          ElevatedButton.icon(
-            onPressed: (){_selectTime(context, _kiteupStatusNotifier, _plannedLocationNotifier);},
-            label: Text(
-              goingText,
-              style: TextStyle(color: BUTTON_PRIMARY_TEXT, fontSize: 20),
-            ),
-            icon: SvgPicture.asset(
-              "assets/status_car.svg",
-              width: 20,
-              color: Colors.white,
-            ),
-            style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.only(left: 30, top: 20, bottom: 20, right: 30),
-                primary: BUTTON_PRIMARY,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(180))),
-          ),
-      Spacer(flex: 1),
-            ElevatedButton.icon(
-              onPressed: ()async {
-                var sessionData = await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ModalSession();
-                    });
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(flex: 3),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    _selectTime(context, _kiteupStatusNotifier,
+                        _plannedLocationNotifier);
+                  },
+                  label: Text(
+                    goingText,
+                    style: TextStyle(color: BUTTON_PRIMARY_TEXT, fontSize: 20),
+                  ),
+                  icon: SvgPicture.asset(
+                    "assets/status_car.svg",
+                    width: 20,
+                    color: Colors.white,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 20, bottom: 20, right: 30),
+                      primary: BUTTON_PRIMARY,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(180))),
+                ),
+                const Spacer(flex: 1),
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    var sessionData = await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return ModalSession();
+                        });
 
-                if (sessionData[0] != null &&
-                    sessionData[1] != null &&
-                    sessionData[2] != null) {
-                  var endDateTime =
-                  DateTime.now().add(Duration(seconds: sessionData[2]));
-                  var storage = await SharedPreferences.getInstance();
-                  await storage.setString('kiteup-status', 'Gear-Up');
-                  await storage.setString(
-                      'kiteup-preparation-time', endDateTime.toString());
-                  await storage.setString(
-                      'kiteup-board-data',
-                      boardSizes[sessionData[0]] +
-                          ', ' +
-                          boardTypes[sessionData[1]]);
-                  Navigator.pushNamed(context, 'kiteup_status_page');
-                }
-              },
-              label: Text(
-                "Kite-up",
-                style: TextStyle(color: BUTTON_PRIMARY_TEXT, fontSize: 20),
-              ),
-              icon: Icon(
-                Icons.check,
-                color: BUTTON_PRIMARY_TEXT,
-              ),
-              style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.only(left: 30, top: 20, bottom: 20, right: 30),
-                  primary: BUTTON_PRIMARY,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(180))),
+                    if (sessionData[0] != null &&
+                        sessionData[1] != null &&
+                        sessionData[2] != null) {
+                      var endDateTime =
+                          DateTime.now().add(Duration(seconds: sessionData[2]));
+                      var storage = await SharedPreferences.getInstance();
+                      await storage.setString('kiteup-status', 'Gear-Up');
+                      await storage.setString(
+                          'kiteup-preparation-time', endDateTime.toString());
+                      await storage.setString(
+                          'kiteup-board-data',
+                          boardSizes[sessionData[0]] +
+                              ', ' +
+                              boardTypes[sessionData[1]]);
+
+                      await storage.remove('planned-location');
+                      _plannedLocationNotifier.clearLocation();
+                      Navigator.pushNamed(context, 'kiteup_status_page');
+                    }
+                  },
+                  label: Text(
+                    "Kite-up",
+                    style: TextStyle(color: BUTTON_PRIMARY_TEXT, fontSize: 20),
+                  ),
+                  icon: Icon(
+                    Icons.check,
+                    color: BUTTON_PRIMARY_TEXT,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.only(
+                          left: 30, top: 20, bottom: 20, right: 30),
+                      primary: BUTTON_PRIMARY,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(180))),
+                ),
+                const Spacer(flex: 3),
+              ],
             ),
-      Spacer(flex: 3),
-      ],
-    ),
           ]),
         ));
   }

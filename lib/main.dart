@@ -43,7 +43,7 @@ void main() {
       create: (_) => FavoriteLocationNotifier(),
     ),
     ChangeNotifierProvider<ThemeNotifier>(
-        create: (_) => ThemeNotifier(customDarkTheme()),
+      create: (_) => ThemeNotifier(customDarkTheme()),
     ),
   ], child: MyApp()));
 }
@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final _plannedLocationNotifier =
         Provider.of<PlannedLocationNotifier>(context);
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) => getPlannedLocation(
+    WidgetsBinding.instance.addPostFrameCallback((_) => getPlannedLocation(
         _plannedLocationNotifier, _selectedLocationNotifier));
 
     return Scaffold(

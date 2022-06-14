@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:kiteup/dummy%20data/locations.dart';
-import 'package:kiteup/notifiers/notifier_favorite_location.dart';
 import 'package:kiteup/widgets/item_location.dart';
 import 'package:provider/provider.dart';
-import 'dart:math' as math;
 
 import '../constants.dart';
 import '../helpers/hexcolor.dart';
 import '../notifiers/notifier_selected_location.dart';
 
 class LocationListPage extends StatefulWidget {
-  LocationListPage();
+  const LocationListPage();
 
   @override
   _LocationListPage createState() => _LocationListPage();
@@ -50,38 +47,40 @@ class _LocationListPage extends State<LocationListPage> {
         appBar: null,
         body: Column(children: <Widget>[
           //Favorite Spots
-            Visibility(
-            visible: favoriteSpots.length > 0,
-            child:Container(
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  decoration: BoxDecoration(
-                    color: DARK_BACKGROUND_SECONDARY,
+          Visibility(
+            visible: favoriteSpots.isNotEmpty,
+            child: Container(
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    decoration: BoxDecoration(
+                      color: DARK_BACKGROUND_SECONDARY,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Favorite Spots',
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Favorite Spots',
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ],),
-                  ),
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: favoriteSpots.length,
-                    itemBuilder: (context, index) {
-                      final location = favoriteSpots[index];
-                      return LocationItemWidget(
-                          location: location,
-                          clickButtonFunction: () {
-                            onLocationCLick(location);
-                          });
-                    }),
-              ],
-            ),),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: favoriteSpots.length,
+                      itemBuilder: (context, index) {
+                        final location = favoriteSpots[index];
+                        return LocationItemWidget(
+                            location: location,
+                            clickButtonFunction: () {
+                              onLocationCLick(location);
+                            });
+                      }),
+                ],
+              ),
+            ),
           ),
           //Nearby Spots
           Container(

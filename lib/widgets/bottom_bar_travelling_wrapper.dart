@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kiteup/constants.dart';
-import 'package:kiteup/dummy%20data/locations.dart';
 import 'package:kiteup/notifiers/notifier_planned_location.dart';
 import 'package:kiteup/widgets/bottom_bar_travelling.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +21,7 @@ class _BottomBarTravellingWrapperState
 
     return ChangeNotifierProvider.value(
       value: _plannedLocationNotifier,
-      child: BottomBarTravelling(),
+      child: const BottomBarTravelling(),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:kiteup/widgets/modals/widgets/modal_dropdown.dart';
 
 class ModalSession extends StatefulWidget {
   @override
-  State createState() => new _ModalSessionState();
+  State createState() => _ModalSessionState();
 }
 
 class _ModalSessionState extends State<ModalSession> {
