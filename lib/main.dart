@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:kiteup/constants.dart';
 import 'package:kiteup/notifiers/notifier_cancel_reason.dart';
+import 'package:kiteup/notifiers/notifier_favorite_location.dart';
 import 'package:kiteup/notifiers/notifier_kiteup_status.dart';
 import 'package:kiteup/notifiers/notifier_rating_score.dart';
 import 'package:kiteup/notifiers/notifier_selected_location.dart';
@@ -30,6 +31,9 @@ void main() {
     ),
     ChangeNotifierProvider<KiteupStatusNotifier>(
       create: (_) => KiteupStatusNotifier(),
+    ),
+    ChangeNotifierProvider<FavoriteLocationNotifier>(
+      create: (_) => FavoriteLocationNotifier(),
     ),
     ChangeNotifierProvider<ThemeNotifier>(
         create: (_) => ThemeNotifier(customDarkTheme()),

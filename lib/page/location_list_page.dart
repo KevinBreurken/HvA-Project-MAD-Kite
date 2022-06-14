@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kiteup/dummy%20data/locations.dart';
+import 'package:kiteup/notifiers/notifier_favorite_location.dart';
 import 'package:kiteup/widgets/item_location.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as math;
@@ -18,7 +19,7 @@ class LocationListPage extends StatefulWidget {
 
 class _LocationListPage extends State<LocationListPage> {
   List<Location> listToSearch = allLocations;
-  List<Location> favoriteSpots = [allLocations[2]];
+  List<Location> favoriteSpots = [];
 
   //Dummycode to display some examples of spots nearby
   List<Location> nearbySpots = [allLocations[0], allLocations[1]];
@@ -28,12 +29,19 @@ class _LocationListPage extends State<LocationListPage> {
   @override
   void initState() {
     super.initState();
+    print("Called");
     //Start empty
+    getFavorites();
     searchSession("");
   }
 
   @override
   Widget build(BuildContext context) {
+    getFavorites();
+    print(favoriteSpots.length);
+    final _favoriteLocationNotifier =
+    Provider.of<FavoriteLocationNotifier>(context);
+
     final _selectedLocationNotifier =
         Provider.of<SelectedLocationNotifier>(context);
 
@@ -229,5 +237,12 @@ class _LocationListPage extends State<LocationListPage> {
     }).toList();
 
     setState(() => listToSearch = suggestions);
+  }
+
+  void getFavorites() {
+    final suggestions = allLocations.where((location) {
+      return location.isLiked;
+    }).toList();
+    setState(() => favoriteSpots = suggestions);
   }
 }

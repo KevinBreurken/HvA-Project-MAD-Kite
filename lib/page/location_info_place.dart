@@ -11,6 +11,7 @@ import 'package:kiteup/notifiers/notifier_kiteup_status.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../notifiers/notifier_favorite_location.dart';
 import '../notifiers/notifier_selected_location.dart';
 import '../widgets/modals/modal_session.dart';
 import '../widgets/modals/modal_session_data.dart';
@@ -52,6 +53,10 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final _favoriteLocationNotifier =
+      Provider.of<FavoriteLocationNotifier>(context);
+
     final _selectedLocationNotifier =
         Provider.of<SelectedLocationNotifier>(context);
         
@@ -60,7 +65,6 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
 
     List<Event> matchingEvents = fetchEvents(_selectedLocationNotifier.selectedLocation);
     addEvents(matchingEvents);
-    
     return Scaffold(
         appBar: null,
         body: Scaffold(
@@ -79,12 +83,23 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                     style: Theme.of(context).textTheme.headlineLarge),
                 Container(
                   margin: const EdgeInsets.all(10),
-                  child: const Icon(
-                    Icons.favorite,
-                    size: 30.0,
-                    color: Colors.blueGrey,
-                    semanticLabel: 'Click to add to favorites',
-                  ),
+                  child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _selectedLocationNotifier.selectedLocation.isLiked = !_selectedLocationNotifier.selectedLocation.isLiked;
+                          // _favoriteLocationNotifier.updateScore(_selectedLocationNotifier.selectedLocation.isLiked);
+                        });
+
+                      },
+                      icon: _selectedLocationNotifier.selectedLocation.isLiked == true
+                          ? Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      )
+                          : Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      )),
                 ),
               ],
             ),
