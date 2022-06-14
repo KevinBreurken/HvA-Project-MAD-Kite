@@ -37,7 +37,7 @@ class _ModalSessionState extends State<ModalSession> {
             hint: 'Preparation time...',
             items: preparationTimes,
             onChange: (value) =>
-                prepTime = ((int.parse(value) + 1) * 10).toString())
+                prepTime = ((int.parse(value) + 1) * 900).toString())
       ],
     );
     return dialog;
