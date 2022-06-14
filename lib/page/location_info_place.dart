@@ -215,6 +215,15 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
         context: context,
         initialTime: selectedTime,
         initialEntryMode: TimePickerEntryMode.dial,
+        builder: (context, child) {
+          return Theme(
+            data: ThemeData.dark().copyWith(
+              primaryColor: Colors.green,
+              secondaryHeaderColor: Colors.green,
+            ),
+            child: child!,
+          );
+        },
       );
 
       if(timeOfDay != null && timeOfDay != selectedTime)
