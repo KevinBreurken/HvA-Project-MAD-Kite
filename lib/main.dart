@@ -14,7 +14,6 @@ import 'package:kiteup/page/location_state_manager.dart';
 import 'package:kiteup/page/map_page.dart';
 import 'package:kiteup/page/my_sessions_page.dart';
 import 'package:kiteup/page/settings_page.dart';
-import 'package:kiteup/widgets/bottom_bar_travelling.dart';
 import 'package:kiteup/widgets/bottom_bar_travelling_wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -131,6 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
       SelectedLocationNotifier selectedLocationNotifier) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     String? locationJson = storage.getString('planned-location');
+
     if (locationJson != null) {
       Map<String, dynamic> locationMapping = await jsonDecode(locationJson);
       Location parsedLocation = Location.fromJson(locationMapping);

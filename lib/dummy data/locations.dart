@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:kiteup/helpers/hexcolor.dart';
 
 enum WeatherType { sunny, raining }

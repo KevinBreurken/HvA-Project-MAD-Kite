@@ -40,7 +40,7 @@ class _ModalRatingState extends State<ModalRating> {
       title: 'Rate this session',
       function: () async => {
         storage = await SharedPreferences.getInstance(),
-        locationName = _selectedLocationNotifier.selectedLocation.locationName,
+        locationName = _selectedLocationNotifier.selectedLocation!.locationName,
         gear = storage.getString('kiteup-board-data')!,
         end = DateTime.now(),
         start = end

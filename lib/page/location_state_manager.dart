@@ -6,7 +6,7 @@ import 'package:kiteup/dummy%20data/locations.dart';
 import 'package:kiteup/page/kiteup_status_page.dart';
 import 'package:kiteup/page/location_info_place.dart';
 import 'package:kiteup/page/location_list_page.dart';
-import 'package:kiteup/widgets/bottom_bar_traveling.dart';
+import 'package:kiteup/widgets/bottom_bar_travelling.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationStateManager extends StatefulWidget {
@@ -37,7 +37,8 @@ class _LocationStateManagerState extends State<LocationStateManager> {
           Navigator(
             key: navigator,
             onGenerateRoute: (settings) {
-              callbackSetRoute(settings.name);
+              WidgetsBinding.instance!
+                  .addPostFrameCallback((_) => callbackSetRoute(settings.name));
               switch (settings.name) {
                 case 'location_list':
                   return MaterialPageRoute(

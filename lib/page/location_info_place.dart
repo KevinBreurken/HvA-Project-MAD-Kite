@@ -42,13 +42,13 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
     });
   }
 
-  addEventItem(Event event){
+  addEventItem(Event event) {
     setState(() {
       allEvents.add(event);
     });
   }
 
-  addEvents(List<Event> events){
+  addEvents(List<Event> events) {
     setState(() {
       this.events.clear();
       this.events.addAll(events);
@@ -59,13 +59,24 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
   Widget build(BuildContext context) {
     final _selectedLocationNotifier =
         Provider.of<SelectedLocationNotifier>(context);
-        
-    final _kiteupStatusNotifier =
-        Provider.of<KiteupStatusNotifier>(context);
+    location = _selectedLocationNotifier.selectedLocation;
 
-    List<Event> matchingEvents = fetchEvents(_selectedLocationNotifier.selectedLocation);
+    final _kiteupStatusNotifier = Provider.of<KiteupStatusNotifier>(context);
+    final _plannedLocationNotifier =
+        Provider.of<PlannedLocationNotifier>(context);
+
+    List<Event> matchingEvents =
+        fetchEvents(_selectedLocationNotifier.selectedLocation!);
     addEvents(matchingEvents);
-    
+
+    if (_plannedLocationNotifier.plannedLocation != null) {
+      if (location!.locationName ==
+          _plannedLocationNotifier.plannedLocation!.locationName) {
+        goingText = _plannedLocationNotifier.plannedLocation!.arrivalTime!
+            .format(context);
+      }
+    }
+
     return Scaffold(
         appBar: null,
         body: Scaffold(
@@ -74,13 +85,13 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (goingText == " Going")
-                  BackButton(
-                      color: Colors.white,
-                      onPressed: () => {Navigator.pop(context)})
-                else
-                  Container(),
-                Text(_selectedLocationNotifier.selectedLocation.locationName,
+                BackButton(
+                    color: Colors.white,
+                    onPressed: () => {
+                          LocationStateManager.navigator.currentState!
+                              .pushNamed('location_list')
+                        }),
+                Text(_selectedLocationNotifier.selectedLocation!.locationName,
                     style: TextStyle(
                         color: DARK_PRIMARY_TEXT,
                         fontSize: 30,
@@ -107,34 +118,45 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                           fontSize: 20,
                         )))),
             Expanded(
-              child: SizedBox(
-                height: 200,
-                child: ListView.builder(
-                  itemBuilder: (context, position) {
-                    Event event = events[position];
-                    return Container(
-                      height: 25,
-                      child: Center(child: Row(
-                        children: [
-                          Text(event.createdAt.hour.toString() + ":" + event.createdAt.minute.toString(), style: const TextStyle(color: Colors.white)),
-                          const SizedBox(width: 20),
-                          Text(event.user.name + " will arive at " + (event.datetime!.hour.toString() + ":" + event.datetime!.minute.toString()), style: const TextStyle(color: Colors.white)),
-                        ],
-                      )),
-                    );
-                  },
-                  padding: const EdgeInsetsDirectional.fromSTEB(15, 5, 0, 0),
-                  itemCount: events.length,
-                )
-              )
-            ),
+                child: SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      itemBuilder: (context, position) {
+                        Event event = events[position];
+                        return Container(
+                          height: 25,
+                          child: Center(
+                              child: Row(
+                            children: [
+                              Text(
+                                  event.createdAt.hour.toString() +
+                                      ":" +
+                                      event.createdAt.minute.toString(),
+                                  style: const TextStyle(color: Colors.white)),
+                              const SizedBox(width: 20),
+                              Text(
+                                  event.user.name +
+                                      " will arive at " +
+                                      (event.datetime!.hour.toString() +
+                                          ":" +
+                                          event.datetime!.minute.toString()),
+                                  style: const TextStyle(color: Colors.white)),
+                            ],
+                          )),
+                        );
+                      },
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(15, 5, 0, 0),
+                      itemCount: events.length,
+                    ))),
             ButtonBar(
               mainAxisSize: MainAxisSize.min,
               buttonHeight: 10,
               children: [
                 GestureDetector(
                   onTap: () {
-                    _selectTime(context, _kiteupStatusNotifier, _selectedLocationNotifier);
+                    _selectTime(context, _kiteupStatusNotifier,
+                        _plannedLocationNotifier);
                   },
                   child: Container(
                     width: 120,
@@ -182,6 +204,9 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                           boardSizes[sessionData[0]] +
                               ', ' +
                               boardTypes[sessionData[1]]);
+
+                      await storage.remove('planned-location');
+                      _plannedLocationNotifier.clearLocation();
                       Navigator.pushNamed(context, 'kiteup_status_page');
                     }
                   },
@@ -199,8 +224,7 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                     child: Row(
                       children: const [
                         Icon(Icons.check, color: Colors.white),
-                        Text("Kite-up",
-                            style: TextStyle(color: Colors.white)),
+                        Text("Kite-up", style: TextStyle(color: Colors.white)),
                       ],
                     ),
                   ),
@@ -211,48 +235,59 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
         ));
   }
 
-  fetchEvents(Location location){
-    return allEvents.where((event) => event.location == location && event.datetime != null && event.type == EventType.GOING).toList();
+  fetchEvents(Location location) {
+    return allEvents
+        .where((event) =>
+            event.location == location &&
+            event.datetime != null &&
+            event.type == EventType.GOING)
+        .toList();
   }
-  
-  _selectTime(BuildContext context, _kiteupStatusNotifier, _selectedLocationNotifier) async {          
-      final TimeOfDay? timeOfDay = await showTimePicker(
-        context: context,
-        initialTime: selectedTime,
-        initialEntryMode: TimePickerEntryMode.dial,
-        builder: (context, child) {
-          return Theme(
-            data: ThemeData.dark().copyWith(
-              primaryColor: Colors.green,
-              secondaryHeaderColor: Colors.green,
-            ),
-            child: child!,
-          );
-        },
+
+  _selectTime(BuildContext context, _kiteupStatusNotifier,
+      PlannedLocationNotifier _plannedLocationNotifier) async {
+    final TimeOfDay? timeOfDay = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+      initialEntryMode: TimePickerEntryMode.dial,
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            primaryColor: Colors.green,
+            secondaryHeaderColor: Colors.green,
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (timeOfDay != null && timeOfDay != selectedTime) {
+      final now = DateTime.now();
+      final newDateTime = DateTime(
+          now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute);
+      final diff = newDateTime.difference(now);
+
+      location!.arrivalTime = timeOfDay;
+      _plannedLocationNotifier.updateLocation(location!);
+      SharedPreferences storage = await SharedPreferences.getInstance();
+      storage.setString('planned-location', jsonEncode(location));
+
+      // Add new event to the list of events
+      Event event = Event(
+        location: location!,
+        user: allUsers[0],
+        createdAt: DateTime.now(),
+        type: EventType.GOING,
+        datetime: DateTime.now().add(diff),
       );
 
-      if(timeOfDay != null && timeOfDay != selectedTime)
-        {
-          final now = DateTime.now();
-          final newDateTime = DateTime(now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute);
-          final diff = newDateTime.difference(now);
+      setGoingText(" " + timeOfDay.format(context));
+      _kiteupStatusNotifier.updateStatus("Traveling");
 
-          // Add new event to the list of events
-          Event event = Event(
-            location: _selectedLocationNotifier.selectedLocation,
-            user: allUsers[0],
-            createdAt: DateTime.now(),
-            type: EventType.GOING,
-            datetime: DateTime.now().add(diff),
-          );
-
-          setGoingText(" " + timeOfDay.format(context));
-          _kiteupStatusNotifier.updateStatus("Traveling");
-          
-          addEventItem(event);
-        } else {
-          setGoingText(" Going");
-          _kiteupStatusNotifier.updateStatus("");
-        }
+      addEventItem(event);
+    } else {
+      setGoingText(" Going");
+      _kiteupStatusNotifier.updateStatus("");
+    }
   }
 }
