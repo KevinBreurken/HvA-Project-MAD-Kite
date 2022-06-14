@@ -29,8 +29,8 @@ class _ModalDropdownState extends State<ModalDropdown> {
           color: DARK_BACKGROUND_SECONDARY,
           borderRadius: BorderRadius.circular(180),
         ),
-        margin: EdgeInsets.only(top: 5, bottom: 5),
-        padding: EdgeInsets.all(10),
+        margin: const EdgeInsets.only(top: 5, bottom: 5),
+        padding: const EdgeInsets.all(10),
         child: DropdownButtonHideUnderline(
             child: DropdownButton(
           isExpanded: true,

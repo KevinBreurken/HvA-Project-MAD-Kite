@@ -5,7 +5,7 @@ import 'package:kiteup/widgets/modals/widgets/modal_dropdown.dart';
 
 class ModalSession extends StatefulWidget {
   @override
-  State createState() => new _ModalSessionState();
+  State createState() => _ModalSessionState();
 }
 
 class _ModalSessionState extends State<ModalSession> {
@@ -37,7 +37,7 @@ class _ModalSessionState extends State<ModalSession> {
             hint: 'Preparation time...',
             items: preparationTimes,
             onChange: (value) =>
-                prepTime = ((int.parse(value) + 1) * 10).toString())
+                prepTime = ((int.parse(value) + 1) * 900).toString())
       ],
     );
     return dialog;

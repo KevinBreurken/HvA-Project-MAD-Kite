@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 
+import '../dummy data/locations.dart';
+
 class SelectedLocationNotifier extends ChangeNotifier {
-  String _currentLocation = 'Castricum aan zee';
+  Location? _selectedLocation;
   SelectedLocationNotifier();
 
-  String get currentLocation => _currentLocation;
+  Location? get selectedLocation => _selectedLocation;
 
-  updateLocation(String value) {
-    if (value != _currentLocation) {
-      _currentLocation = value;
+  updateSelectedLocation(Location location) {
+    if (location != _selectedLocation) {
+      _selectedLocation = location;
       notifyListeners();
     }
   }

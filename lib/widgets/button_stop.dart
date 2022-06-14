@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kiteup/constants.dart';
 
 class ButtonStop extends StatelessWidget {
-  ButtonStop(this.function);
+  const ButtonStop(this.function);
   final void Function() function;
 
   @override
@@ -13,7 +13,7 @@ class ButtonStop extends StatelessWidget {
           style: TextStyle(color: BUTTON_PRIMARY_TEXT, fontSize: 20),
         ),
         style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.only(left: 60, top: 20, bottom: 20, right: 60),
+            padding: const EdgeInsets.only(left: 60, top: 20, bottom: 20, right: 60),
             primary: BUTTON_CANCEL,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(180))),
