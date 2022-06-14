@@ -7,7 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kiteup/constants.dart';
 import 'package:kiteup/dummy%20data/locations.dart';
 import 'package:kiteup/dummy%20data/users.dart';
+import 'package:kiteup/main.dart';
 import 'package:kiteup/notifiers/notifier_kiteup_status.dart';
+import 'package:kiteup/notifiers/notifier_planned_location.dart';
+import 'package:kiteup/page/location_state_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,6 +30,8 @@ class KiteupLocationPage extends StatefulWidget {
 class _LocationInfoPageState extends State<KiteupLocationPage> {
   TimeOfDay selectedTime = TimeOfDay.now();
   String goingText = " Going";
+  Location? location;
+
   List<Event> events = [];
 
   _LocationInfoPageState();

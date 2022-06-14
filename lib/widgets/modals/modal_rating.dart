@@ -15,6 +15,13 @@ class ModalRating extends StatefulWidget {
 }
 
 class _ModalRatingState extends State<ModalRating> {
+  late SharedPreferences storage;
+  late String locationName;
+  late String gear;
+  late DateTime start;
+  late DateTime end;
+  late Session session;
+
   @override
   Widget build(BuildContext context) {
     double rating = 3.0;

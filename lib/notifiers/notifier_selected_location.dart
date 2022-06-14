@@ -6,9 +6,9 @@ class SelectedLocationNotifier extends ChangeNotifier {
   Location? _selectedLocation;
   SelectedLocationNotifier();
 
-  Location get selectedLocation => _selectedLocation!;
+  Location? get selectedLocation => _selectedLocation;
 
-  updateSelectedLocation(Location location){
+  updateSelectedLocation(Location location) {
     if (location != _selectedLocation) {
       _selectedLocation = location;
       notifyListeners();
