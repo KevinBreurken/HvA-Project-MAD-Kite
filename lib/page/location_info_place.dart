@@ -105,12 +105,12 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
                   child: IconButton(
                       onPressed: () {
                         setState(() {
-                          _selectedLocationNotifier.selectedLocation.isLiked = !_selectedLocationNotifier.selectedLocation.isLiked;
+                          // _selectedLocationNotifier.selectedLocation?.isLiked = !_selectedLocationNotifier.selectedLocation?.isLiked;
                           // _favoriteLocationNotifier.updateScore(_selectedLocationNotifier.selectedLocation.isLiked);
                         });
 
                       },
-                      icon: _selectedLocationNotifier.selectedLocation.isLiked == true
+                      icon: _selectedLocationNotifier.selectedLocation?.isLiked == true
                           ? Icon(
                         Icons.favorite,
                         color: Colors.red,
@@ -158,7 +158,7 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
         children: [
             Spacer(flex: 3),
           ElevatedButton.icon(
-            onPressed: (){_selectTime(context, _kiteupStatusNotifier, _selectedLocationNotifier);},
+            onPressed: (){_selectTime(context, _kiteupStatusNotifier, _plannedLocationNotifier);},
             label: Text(
               goingText,
               style: TextStyle(color: BUTTON_PRIMARY_TEXT, fontSize: 20),
