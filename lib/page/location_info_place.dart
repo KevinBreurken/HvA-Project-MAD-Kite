@@ -59,9 +59,6 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
   @override
   Widget build(BuildContext context) {
 
-    final _favoriteLocationNotifier =
-      Provider.of<FavoriteLocationNotifier>(context);
-
     final _selectedLocationNotifier =
         Provider.of<SelectedLocationNotifier>(context);
     location = _selectedLocationNotifier.selectedLocation;

@@ -18,7 +18,7 @@ class LocationItemWidget extends StatelessWidget {
       case WeatherType.sunny:
         return 'weather_sunny.svg';
       case WeatherType.raining:
-        return 'weather_raining.svg';
+        return 'weather_rain.svg';
       case WeatherType.cloudy:
         return 'weather_cloudy.svg';
       case null:

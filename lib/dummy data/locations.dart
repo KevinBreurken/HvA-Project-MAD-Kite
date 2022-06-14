@@ -93,7 +93,7 @@ var allLocations = [
       windSpeed: 8,
       windDirection: 45,
       temperature: 7,
-      weatherType: WeatherType.raining,
+      weatherType: WeatherType.cloudy,
       windIconColor: "F09D0A",
       isLiked: false),
   Location(
@@ -104,7 +104,7 @@ var allLocations = [
       windSpeed: 1,
       windDirection: 185,
       temperature: 32,
-      weatherType: WeatherType.raining,
+      weatherType: WeatherType.sunny,
       windIconColor: "DEDEDE",
       isLiked: false),
   Location(
@@ -115,7 +115,7 @@ var allLocations = [
       windSpeed: 4,
       windDirection: 310,
       temperature: 1,
-      weatherType: WeatherType.raining,
+      weatherType: WeatherType.cloudy,
       windIconColor: "3971FF",
       isLiked: false),
 ];

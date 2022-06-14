@@ -19,11 +19,17 @@ class BottomBarTravelling extends StatefulWidget {
 class _BottomBarTravellingState extends State<BottomBarTravelling> {
   @override
   Widget build(BuildContext context) {
+
+    final _selectedLocationNotifier =
+    Provider.of<SelectedLocationNotifier>(context);
+
     return Consumer<PlannedLocationNotifier>(
         builder: (context, notifier, child) => (notifier.isVisible &&
                 notifier.plannedLocation != null)
             ? GestureDetector(
                 onTap: () {
+                  _selectedLocationNotifier
+                      .updateSelectedLocation(notifier.plannedLocation!);
                   notifier.updateLocation(notifier.plannedLocation!);
                   LocationStateManager.navigator.currentState
                       ?.pushNamed('location_details');
@@ -53,7 +59,8 @@ class _BottomBarTravellingState extends State<BottomBarTravelling> {
                                       color: PRIMARY,
                                     ),
                                     Text(
-                                      '15:00',
+                                      notifier.plannedLocation!.arrivalTime!
+                                          .format(context),
                                       style: TextStyle(
                                           color: DARK_PRIMARY_TEXT,
                                           fontSize: 16),

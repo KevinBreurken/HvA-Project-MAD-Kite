@@ -73,6 +73,7 @@ flutter:
     - assets/location_item/weather_cloudy.svg
     - assets/location_item/weather_sunny.svg
     - assets/location_item/weather_raining.svg
+    - assets/location_item/weather_rain.svg
     - assets/location_item/wind_direction.svg
     - assets/graph.png
 
