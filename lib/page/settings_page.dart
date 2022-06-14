@@ -10,14 +10,14 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
         appBar: null,
         body: Center(
-          child: Column(children: <Widget>[
-            ElevatedButton(
-                onPressed: () => {themeNotifier.setTheme(customLightTheme())},
-                child: new Text('Light theme'))
-          ,ElevatedButton(
-                onPressed: () => {themeNotifier.setTheme(customDarkTheme())},
-                child: new Text('Dark theme'))
-          ]),
+          // child: Column(children: <Widget>[
+          //   ElevatedButton(
+          //       onPressed: () => {themeNotifier.setTheme(customLightTheme())},
+          //       child: new Text('Light theme'))
+          // ,ElevatedButton(
+          //       onPressed: () => {themeNotifier.setTheme(customDarkTheme())},
+          //       child: new Text('Dark theme'))
+          // ]),
         ));
   }
 }

@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-ThemeData customLightTheme() {
-  final ThemeData lightTheme = ThemeData.light();
-  return customDarkTheme();
-}
-
 ThemeData customDarkTheme() {
   final ThemeData darkTheme = ThemeData.dark();
   return darkTheme.copyWith(
