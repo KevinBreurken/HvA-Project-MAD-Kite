@@ -34,12 +34,6 @@ class Event extends ChangeNotifier {
 List<Event> allEvents = [
   Event(location: allLocations[0], createdAt: DateTime.parse("1969-07-20 12:10:00"), type: EventType.GOING, user: allUsers[0], datetime: DateTime.parse("1969-07-20 12:10:00")),
   Event(location: allLocations[1], createdAt: DateTime.parse("1969-07-20 13:10:00"), type: EventType.GOING, user: allUsers[1], datetime: DateTime.parse("1969-07-20 13:10:00")),
-  Event(location: allLocations[3], createdAt: DateTime.parse("1969-07-20 05:10:00"), type: EventType.GOING, user: allUsers[2], datetime: DateTime.parse("1969-07-20 05:10:00")),
-  Event(location: allLocations[4], createdAt: DateTime.parse("1969-07-20 07:10:00"), type: EventType.GOING, user: allUsers[3], datetime: DateTime.parse("1969-07-20 07:10:00")),
-  Event(location: allLocations[5], createdAt: DateTime.parse("1969-07-20 05:10:00"), type: EventType.GOING, user: allUsers[2], datetime: DateTime.parse("1969-07-20 05:10:00")),
-  Event(location: allLocations[6], createdAt: DateTime.parse("1969-07-20 09:10:00"), type: EventType.GOING, user: allUsers[1], datetime: DateTime.parse("1969-07-20 09:10:00")),
-  Event(location: allLocations[7], createdAt: DateTime.parse("1969-07-20 11:10:00"), type: EventType.GOING, user: allUsers[0], datetime: DateTime.parse("1969-07-20 11:10:00")),
-  Event(location: allLocations[8], createdAt: DateTime.parse("1969-07-20 09:10:00"), type: EventType.GOING, user: allUsers[2], datetime: DateTime.parse("1969-07-20 09:10:00")),
-  Event(location: allLocations[9], createdAt: DateTime.parse("1969-07-20 12:10:00"), type: EventType.GOING, user: allUsers[2], datetime: DateTime.parse("1969-07-20 12:10:00")),
-  Event(location: allLocations[10], createdAt: DateTime.parse("1969-07-20"), type: EventType.GOING, user: allUsers[1], datetime: DateTime.parse("1969-07-20 12:00:00")),
+  Event(location: allLocations[2], createdAt: DateTime.parse("1969-07-20 05:10:00"), type: EventType.GOING, user: allUsers[2], datetime: DateTime.parse("1969-07-20 05:10:00")),
+  Event(location: allLocations[3], createdAt: DateTime.parse("1969-07-20 07:10:00"), type: EventType.GOING, user: allUsers[3], datetime: DateTime.parse("1969-07-20 07:10:00")),
 ];
