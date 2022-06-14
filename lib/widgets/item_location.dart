@@ -7,25 +7,28 @@ import '../constants.dart';
 import '../helpers/hexcolor.dart';
 
 class LocationItemWidget extends StatelessWidget {
-  LocationItemWidget({required Location location, required this.clickButtonFunction}) : location = location;
+  LocationItemWidget(
+      {required Location location, required this.clickButtonFunction})
+      : location = location;
 
   Location location;
   final void Function() clickButtonFunction;
 
-  String getAssetPathByWeather(WeatherType ?weatherType){
-    switch(weatherType){
+  String getWeatherIconByWeatherType(WeatherType? weatherType) {
+    const prefix = 'assets/location_item/';
+
+    switch (weatherType) {
       case WeatherType.sunny:
-        return 'weather_sunny.svg';
+        return prefix + 'weather_sunny.svg';
       case WeatherType.raining:
-        return 'weather_rain.svg';
+        return prefix + 'weather_rain.svg';
       case WeatherType.cloudy:
-        return 'weather_cloudy.svg';
+        return prefix + 'weather_cloudy.svg';
       case null:
-        break;
+        return "null";
     }
-    return "";
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -34,7 +37,8 @@ class LocationItemWidget extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: 70,
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-        decoration: BoxDecoration(color: DARK_BACKGROUND_PRIMARY,
+        decoration: BoxDecoration(
+          color: DARK_BACKGROUND_PRIMARY,
           boxShadow: const [
             BoxShadow(
               blurRadius: 4,
@@ -114,7 +118,8 @@ class LocationItemWidget extends StatelessWidget {
                     Expanded(
                       flex: 3,
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                         child: Transform.rotate(
                           angle: -location.windDirection * (-math.pi / 180.0),
                           child: SvgPicture.asset(
@@ -149,9 +154,10 @@ class LocationItemWidget extends StatelessWidget {
                     Expanded(
                       flex: 3,
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                         child: SvgPicture.asset(
-                          'assets/location_item/' + getAssetPathByWeather(location.weatherType),
+                          getWeatherIconByWeatherType(location.weatherType),
                           height: 32,
                           width: 32,
                           color: DARK_PRIMARY_TEXT,

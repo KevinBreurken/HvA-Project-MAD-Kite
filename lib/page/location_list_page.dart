@@ -15,21 +15,12 @@ class LocationListPage extends StatefulWidget {
 }
 
 class _LocationListPage extends State<LocationListPage> {
-  List<Location> listToSearch = allLocations;
+  //TODO: Implement logic to determine nearby locations.
+  List<Location> nearbySpots = [allLocations[0], allLocations[1]];
+  List<Location> listToSearch = [];
   List<Location> favoriteSpots = [];
 
-  //Dummycode to display some examples of spots nearby
-  List<Location> nearbySpots = [allLocations[0], allLocations[1]];
-
   final controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    //Start empty
-    getFavorites();
-    searchSession("");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +39,7 @@ class _LocationListPage extends State<LocationListPage> {
         body: Column(children: <Widget>[
           //Favorite Spots
           Visibility(
+            //Hide the favorite list when it's empty.
             visible: favoriteSpots.isNotEmpty,
             child: Container(
               child: Column(
@@ -174,48 +166,6 @@ class _LocationListPage extends State<LocationListPage> {
               ),
             ),
           ),
-
-          ///Item labels
-          // Container(
-          //   margin: const EdgeInsets.fromLTRB(4, 8, 0, 0),
-          //   child: Row(
-          //     children: <Widget>[
-          //       Expanded(
-          //         flex: 1,
-          //         child: Text(
-          //           'Distance',
-          //           textAlign: TextAlign.center,
-          //           style: Theme.of(context).textTheme.labelSmall,
-          //         ),
-          //       ),
-          //       Expanded(
-          //           flex: 4,
-          //           child: Padding(
-          //             padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-          //             child: Text(
-          //               'Location',
-          //               style: Theme.of(context).textTheme.labelSmall,
-          //             ),
-          //           )),
-          //       Expanded(
-          //         flex: 1,
-          //         child: Text(
-          //           'Wind',
-          //           textAlign: TextAlign.center,
-          //           style: Theme.of(context).textTheme.labelSmall,
-          //         ),
-          //       ),
-          //       Expanded(
-          //         flex: 1,
-          //         child: Text(
-          //           'Weather',
-          //           textAlign: TextAlign.center,
-          //           style: Theme.of(context).textTheme.labelSmall,
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ]));
   }
 
