@@ -82,7 +82,7 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
         appBar: null,
         body: Scaffold(
           backgroundColor: DARK_BACKGROUND_PRIMARY,
-          body: Column(children: [
+          body: Container(margin: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16), child:Column(children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -126,7 +126,7 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
             Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                    margin: const EdgeInsetsDirectional.fromSTEB(15, 30, 0, 0),
+                    margin: const EdgeInsetsDirectional.fromSTEB(16, 32, 0, 0),
                     child: Text("Activity",
                         style: Theme.of(context).textTheme.titleLarge))),
             Expanded(
@@ -236,7 +236,7 @@ class _LocationInfoPageState extends State<KiteupLocationPage> {
               ],
             ),
           ]),
-        ));
+        )));
   }
 
   fetchEvents(Location location) {

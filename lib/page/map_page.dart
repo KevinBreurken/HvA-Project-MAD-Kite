@@ -4,5 +4,5 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const Scaffold(
       appBar: null,
-      body: Center(child: Text('List', style: TextStyle(fontSize: 60))));
+      body: Center(child: Text('', style: TextStyle(fontSize: 60))));
 }

@@ -9,7 +9,7 @@ ThemeData customDarkTheme() {
     textTheme: darkTheme.textTheme.copyWith(
         headlineLarge: TextStyle(
             color: DARK_SECONDARY_TEXT,
-            fontSize: 26,
+            fontSize: 23,
             fontWeight: FontWeight.bold,
             fontFamily: 'Roboto',
             letterSpacing: 0.2),

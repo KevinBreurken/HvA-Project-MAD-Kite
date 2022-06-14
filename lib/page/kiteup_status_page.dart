@@ -131,7 +131,7 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
         body: Center(
             child: Scaffold(
                 backgroundColor: DARK_BACKGROUND_PRIMARY,
-                body: Center(
+                body: Container(margin: const EdgeInsetsDirectional.fromSTEB(4, 8, 4, 0),child: Center(
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -141,12 +141,13 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                       Text(
                         _selectedLocationNotifier
                             .selectedLocation!.locationName,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: DARK_PRIMARY_TEXT,
                             fontSize: 40,
                             fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 100),
+                      SizedBox(height: 16),
                       Container(
                           width: 237,
                           height: 237,
@@ -201,7 +202,7 @@ class _KiteupStatusPageState extends State<KiteupStatusPage>
                       const Spacer(
                         flex: 1,
                       ),
-                    ])))));
+                    ]))))));
   }
 
   void loadPageStatusData() {

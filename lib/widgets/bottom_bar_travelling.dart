@@ -74,12 +74,14 @@ class _BottomBarTravellingState extends State<BottomBarTravelling> {
                                     children: [
                                       Text(
                                         notifier.plannedLocation!.locationName,
+                                        textAlign: TextAlign.left,
                                         style: TextStyle(
                                             color: DARK_PRIMARY_TEXT,
-                                            fontSize: 20),
+                                            fontSize: 16),
                                       ),
                                       Text(
                                         notifier.plannedLocation!.adres,
+                                        textAlign: TextAlign.left,
                                         style: TextStyle(
                                             color: DARK_SECONDARY_TEXT,
                                             fontSize: 14),
